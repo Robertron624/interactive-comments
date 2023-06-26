@@ -4,16 +4,8 @@ export interface Comment {
     createdAt: string;
     score: number;
     owner: Owner;
-    replies: Reply[];
-}
-
-interface Reply {
-    id: number;
-    content: string;
-    createdAt: string;
-    score: number;
-    owner: Owner;
-    replyingTo: string;
+    replyingTo?: string;
+    replies: Comment[];
 }
 
 interface Owner {
