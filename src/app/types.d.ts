@@ -8,7 +8,7 @@ export interface Comment {
     replies: Comment[];
 }
 
-interface Owner {
+export interface Owner {
     username: string;
     profileImageUrl: {
         png: string;
