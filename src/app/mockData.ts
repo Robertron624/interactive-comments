@@ -9,8 +9,8 @@ export const comments: Comment[] = [
         score: 12,
         owner: {
             profileImageUrl: {
-                png: "./images/avatars/image-amyrobson.png",
-                webp: "./images/avatars/image-amyrobson.webp",
+                png: "/avatars/image-amyrobson.png",
+                webp: "/avatars/image-amyrobson.webp",
             },
             username: "amyrobson",
         },
@@ -24,8 +24,8 @@ export const comments: Comment[] = [
         score: 5,
         owner: {
             profileImageUrl: {
-                png: "./images/avatars/image-maxblagun.png",
-                webp: "./images/avatars/image-maxblagun.webp",
+                png: "/avatars/image-maxblagun.png",
+                webp: "/avatars/image-maxblagun.webp",
             },
             username: "maxblagun",
         },
@@ -39,8 +39,8 @@ export const comments: Comment[] = [
                 replyingTo: "maxblagun",
                 owner: {
                     profileImageUrl: {
-                        png: "./images/avatars/image-ramsesmiron.png",
-                        webp: "./images/avatars/image-ramsesmiron.webp",
+                        png: "/avatars/image-ramsesmiron.png",
+                        webp: "/avatars/image-ramsesmiron.webp",
                     },
                     username: "ramsesmiron",
                 },
@@ -54,8 +54,8 @@ export const comments: Comment[] = [
                 replyingTo: "ramsesmiron",
                 owner: {
                     profileImageUrl: {
-                        png: "./images/avatars/image-juliusomo.png",
-                        webp: "./images/avatars/image-juliusomo.webp",
+                        png: "/avatars/image-juliusomo.png",
+                        webp: "/avatars/image-juliusomo.webp",
                     },
                     username: "juliusomo",
                 },
