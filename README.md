@@ -104,7 +104,7 @@ Use this section to outline areas that you want to continue focusing on in futur
 
 - [How to setup Vue & Tailwindcss with Google Fonts and HSL color palette](https://medium.com/@saulchelewani/how-to-setup-vue-tailwindcss-with-custom-fonts-and-hsl-color-palette-cda43bf64fea#:~:text=According%20to%20Tailwind%20docs%2C%20we,color%20palette%20the%20framework%20offers.&text=We%20are%20taking%20that%20customization,Hue%2DSaturation%2DLightness) - This helped me to add custom fonts and colors to tailwindcss.
 
-- [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
+- [Tailwind css official docs](https://tailwindcss.com/docs/) - This is essential for learning tailwindcss.
 
 ## Author
 
