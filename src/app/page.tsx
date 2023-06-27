@@ -18,7 +18,24 @@ export default function Home() {
 
     const comments = useCommentStore(state => state.comments);
 
+    const setAllComments = useCommentStore(state => state.setAllComments);
+
     const [myComments, setMyComments] = useState<CommentType[]>(comments);
+
+    // Save comments to local storage when user leaves page
+    useEffect(() => {
+        window.addEventListener("beforeunload", () => {
+            localStorage.setItem("comments", JSON.stringify(comments));
+        });
+    }, [comments]);
+
+    // Get comments from local storage if they exist
+    useEffect(() => {
+        const comments = localStorage.getItem("comments");
+        if (comments) {
+            setAllComments(JSON.parse(comments));
+        }
+    }, [setAllComments]);
 
     // Re render when comments in store changes
     useEffect(() => {

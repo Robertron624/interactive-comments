@@ -4,6 +4,7 @@ import { comments } from "../mockData";
 
 interface CommentState {
     comments: Comment[];
+    setAllComments: (comments: Comment[]) => void;
     addComment: (comment: Comment) => void;
     removeComment: (commentId: number) => void;
     removeAllComments: () => void;
@@ -17,6 +18,7 @@ interface CommentState {
 
 export const useCommentStore = create<CommentState>()((set) => ({
     comments: comments,
+    setAllComments: (comments: Comment[]) => set({ comments: comments }),
     addComment: (comment: Comment) =>
         set((state: { comments: Comment[] }) => ({
             comments: [...state.comments, comment],
