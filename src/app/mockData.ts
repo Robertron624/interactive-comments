@@ -37,6 +37,7 @@ export const comments: Comment[] = [
                 createdAt: "1 week ago",
                 score: 4,
                 replyingTo: "maxblagun",
+                parentCommentId: 2,
                 owner: {
                     profileImageUrl: {
                         png: "/avatars/image-ramsesmiron.png",
@@ -53,6 +54,7 @@ export const comments: Comment[] = [
                 createdAt: "2 days ago",
                 score: 2,
                 replyingTo: "ramsesmiron",
+                parentCommentId: 2,
                 owner: {
                     profileImageUrl: {
                         png: "/avatars/image-juliusomo.png",

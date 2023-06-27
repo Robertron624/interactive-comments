@@ -5,6 +5,7 @@ export interface Comment {
     score: number;
     owner: Owner;
     replyingTo?: string;
+    parentCommentId?: number;
     replies: Comment[];
 }
 

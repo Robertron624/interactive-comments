@@ -9,7 +9,9 @@ interface CommentState {
     removeAllComments: () => void;
     updateComment: (commentId: number, content: string) => void;
     upVoteComment: (commentId: number) => void;
+    upVoteReply: (commentId: number, replyId: number) => void;
     downVoteComment: (commentId: number) => void;
+    downVoteReply: (commentId: number, replyId: number) => void;
 }
 
 export const useCommentStore = create<CommentState>()((set) => ({
@@ -42,11 +44,47 @@ export const useCommentStore = create<CommentState>()((set) => ({
             }
             ),
         })),
+    upVoteReply: (commentId: number, replyId: number) =>
+        set((state: { comments: Comment[] }) => ({
+            comments: state.comments.map((c) => {
+                if (c.id === commentId) {
+                    return {
+                        ...c,
+                        replies: c.replies.map((r) => {
+                            if (r.id === replyId) {
+                                return { ...r, score: r.score + 1 };
+                            }
+                            return r;
+                        }),
+                    };
+                }
+                return c;
+            }
+            ),
+        })),
     downVoteComment: (commentId: number) =>
         set((state: { comments: Comment[] }) => ({
             comments: state.comments.map((c) => {
                 if (c.id === commentId) {
                     return { ...c, score: c.score - 1 };
+                }
+                return c;
+            }
+            ),
+        })),
+    downVoteReply: (commentId: number, replyId: number) =>
+        set((state: { comments: Comment[] }) => ({
+            comments: state.comments.map((c) => {
+                if (c.id === commentId) {
+                    return {
+                        ...c,
+                        replies: c.replies.map((r) => {
+                            if (r.id === replyId) {
+                                return { ...r, score: r.score - 1 };
+                            }
+                            return r;
+                        }),
+                    };
                 }
                 return c;
             }

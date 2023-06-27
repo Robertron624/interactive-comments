@@ -13,6 +13,7 @@ const Comment = ({
     replies,
     score,
     replyingTo,
+    parentCommentId
 }: Comment) => {
     const isReply = replyingTo !== undefined;
 
@@ -30,13 +31,24 @@ const Comment = ({
     };
 
     const upVoteComment = useCommentStore((state) => state.upVoteComment);
+    const upVoteReply = useCommentStore((state) => state.upVoteReply);
     const handleUpvote = () => {
-        upVoteComment(id);
+        if (parentCommentId) {
+            upVoteReply(parentCommentId, id);
+        } else {
+            upVoteComment(id);
+        }
     };
 
     const downVoteComment = useCommentStore((state) => state.downVoteComment);
+    const downVoteReply = useCommentStore((state) => state.downVoteReply);
     const handleDownvote = () => {
-        downVoteComment(id);
+        if (parentCommentId) {
+            downVoteReply(parentCommentId, id);
+        }
+        else {
+            downVoteComment(id);
+        }
     };
 
     return (
