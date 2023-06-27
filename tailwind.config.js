@@ -34,5 +34,7 @@ module.exports = {
       'white': 'hsl(0, 0%, 100%)',
     }
   },
-  plugins: [],
+  plugins: [
+    require('daisyui')
+  ],
 }

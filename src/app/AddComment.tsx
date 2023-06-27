@@ -14,8 +14,11 @@ const AddComment = ({ username, profileImageUrl }: Owner) => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+        // Get length of comments array and its replies
+        const commentsLength = comments.length + comments.reduce((acc, comment) => acc + comment.replies.length, 0);
+
         const commentToAdd: Comment = {
-            id: 99,
+            id: commentsLength + 1,
             owner: {
                 username,
                 profileImageUrl,
@@ -51,7 +54,7 @@ const AddComment = ({ username, profileImageUrl }: Owner) => {
                 >
                     <input
                         placeholder="Add a comment..."
-                        className="rounded-md pl-4 w-96 h-24 border-2 border-light-gray"
+                        className="rounded-md pl-4 w-96 h-24 border-2 border-light-gray bg-white"
                         onChange={handleChange}
                         type="text"
                         name="comment"

@@ -47,16 +47,6 @@ Users should be able to:
 
 ### Screenshot
 
-![](./screenshot.jpg)
-
-Add a screenshot of your solution. The easiest way to do this is to use Firefox to view your project, right-click the page and select "Take a Screenshot". You can choose either a full-height screenshot or a cropped one based on how long the page is. If it's very long, it might be best to crop it.
-
-Alternatively, you can use a tool like [FireShot](https://getfireshot.com/) to take the screenshot. FireShot has a free option, so you don't need to purchase it. 
-
-Then crop/optimize/edit your image however you like, add it to your project, and update the file path in the image above.
-
-**Note: Delete this note and the paragraphs above when you add your screenshot. If you prefer not to add a screenshot, feel free to remove this entire section.**
-
 ### Links
 
 - Solution URL: [Github repo](https://github.com/Robertron624/interactive-comments)
@@ -74,6 +64,7 @@ Then crop/optimize/edit your image however you like, add it to your project, and
 - [React](https://reactjs.org/) - JS library
 - [Next.js](https://nextjs.org/) - React framework
 - [Tailwind CSS](https://tailwindcss.com/) - For styles
+- [DaisyUI](https://daisyui.com/) - Tailwindcss component library
 - [TypeScript](https://www.typescriptlang.org/) - For type checking
 
 ### What I learned
@@ -105,6 +96,8 @@ Use this section to outline areas that you want to continue focusing on in futur
 - [How to setup Vue & Tailwindcss with Google Fonts and HSL color palette](https://medium.com/@saulchelewani/how-to-setup-vue-tailwindcss-with-custom-fonts-and-hsl-color-palette-cda43bf64fea#:~:text=According%20to%20Tailwind%20docs%2C%20we,color%20palette%20the%20framework%20offers.&text=We%20are%20taking%20that%20customization,Hue%2DSaturation%2DLightness) - This helped me to add custom fonts and colors to tailwindcss.
 
 - [Tailwind css official docs](https://tailwindcss.com/docs/) - This is essential for learning tailwindcss.
+
+- [DaisyUI - Modal](https://daisyui.com/components/modal/) - This is a tailwindcss component library that I used to style the remove comment modal.
 
 ## Author
 

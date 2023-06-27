@@ -4,6 +4,7 @@ import { Comment } from "./types";
 import { useState } from "react";
 import Image from "next/image";
 import { useCommentStore } from "./store/commentStore";
+import RemoveCommentModal from "./RemoveComment";
 
 const Comment = ({
     id,
@@ -19,9 +20,10 @@ const Comment = ({
 
     const isCurrentUser = owner.username === "juliusomo";
 
-    const removeComment = useCommentStore((state) => state.removeComment);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+
     const handleDelete = () => {
-        removeComment(id);
+        setIsDeleteModalOpen(!isDeleteModalOpen);
     };
 
     //TODO
@@ -93,7 +95,7 @@ const Comment = ({
                         </button>
                     </div>
                     {/*comment content and info*/}
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-4 w-11/12">
                         {/* Comment top */}
                         <div className="flex justify-between">
                             <div className="flex gap-4 items-center">
@@ -123,6 +125,14 @@ const Comment = ({
                             {/* Comment edit/delete if its current user, if not a reply btn */}
                             {isCurrentUser ? (
                                 <div className="flex gap-3">
+                                    <RemoveCommentModal
+                                        commentId={id}
+                                        setIsDeleteModalOpen={
+                                            setIsDeleteModalOpen
+                                        }
+                                        isDeleteModalOpen={isDeleteModalOpen}
+                                        parentCommentId={parentCommentId}
+                                    />
                                     <button
                                         onClick={handleDelete}
                                         className="text-sm text-soft-red font-bold flex items-center gap-2"
