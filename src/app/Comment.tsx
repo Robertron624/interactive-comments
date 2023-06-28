@@ -68,7 +68,7 @@ const Comment = ({
                     <div className="h-24 rounded-lg px-1 py-3 flex items-center gap-2 flex-col bg-light-gray">
                         <button
                             onClick={handleUpvote}
-                            className="w-6 h-6 font-bold flex justify-center items-center"
+                            className="hover:text-moderated-blue transition-all w-6 h-6 font-bold flex justify-center items-center"
                         >
                             <svg
                                 width="11"
@@ -86,7 +86,7 @@ const Comment = ({
                         </span>
                         <button
                             onClick={handleDownvote}
-                            className="w-6 h-6 font-bold flex justify-center items-center"
+                            className="hover:text-moderated-blue transition-all w-6 h-6 font-bold flex justify-center items-center"
                         >
                             <svg
                                 width="11"
@@ -141,7 +141,7 @@ const Comment = ({
                                     />
                                     <button
                                         onClick={handleDelete}
-                                        className="text-sm text-soft-red font-bold flex items-center gap-2"
+                                        className="hover:opacity-70 transition-all text-sm text-soft-red font-bold flex items-center gap-2"
                                     >
                                         <svg
                                             width="12"
@@ -155,7 +155,7 @@ const Comment = ({
                                         </svg>
                                         Delete
                                     </button>
-                                    <button className="text-sm text-moderated-blue font-bold flex items-center gap-2">
+                                    <button className="hover:opacity-70 transition-all text-sm text-moderated-blue font-bold flex items-center gap-2">
                                         <svg
                                             width="14"
                                             height="14"
@@ -178,7 +178,7 @@ const Comment = ({
                                         isReplyModalOpen={isReplyModalOpen}
                                         parentCommentId={id}
                                     />
-                                    <button onClick={handleReply} className="text-sm text-moderated-blue font-bold flex items-center gap-2">
+                                    <button onClick={handleReply} className="hover:opacity-70 transition-all transit text-sm text-moderated-blue font-bold flex items-center gap-2">
                                         <svg
                                             width="14"
                                             height="13"

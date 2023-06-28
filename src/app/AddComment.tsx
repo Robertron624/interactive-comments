@@ -82,10 +82,10 @@ const AddComment = (
                     />
                     <div className="flex flex-col gap-1">
                         <button
-                            className="px-2 py-1 text-white bg-moderated-blue rounded-md"
+                            className="hover:opacity-70 transition-all px-2 py-1 text-white bg-moderated-blue rounded-md"
                             type="submit"
                         >
-                            SEND
+                            {parentCommentId ? "REPLY" : "SEND"}
                         </button>
 
                         {(parentCommentId && setIsReplyModalOpen) && (
