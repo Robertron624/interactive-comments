@@ -6,6 +6,7 @@ interface CommentState {
     comments: Comment[];
     setAllComments: (comments: Comment[]) => void;
     addComment: (comment: Comment) => void;
+    addReply: (commentId: number, reply: Comment) => void;
     removeComment: (commentId: number) => void;
     removeAllComments: () => void;
     removeReply: (commentId: number, replyId: number) => void;
@@ -22,6 +23,15 @@ export const useCommentStore = create<CommentState>()((set) => ({
     addComment: (comment: Comment) =>
         set((state: { comments: Comment[] }) => ({
             comments: [...state.comments, comment],
+        })),
+    addReply: (commentId: number, reply: Comment) =>
+        set((state: { comments: Comment[] }) => ({
+            comments: state.comments.map((c) => {
+                if (c.id === commentId) {
+                    return { ...c, replies: [...c.replies, reply] };
+                }
+                return c;
+            }),
         })),
     removeComment: (commentId: number) =>
         set((state: { comments: Comment[] }) => ({

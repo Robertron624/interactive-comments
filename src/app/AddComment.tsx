@@ -4,10 +4,20 @@ import Image from "next/image";
 import { Owner, Comment } from "./types";
 import { useCommentStore } from "./store/commentStore";
 
-const AddComment = ({ username, profileImageUrl }: Owner) => {
+interface Props {
+    profileImageUrl: Owner["profileImageUrl"];
+    username: Owner["username"];
+    parentCommentId?: number;
+    setIsReplyModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const AddComment = ( 
+    { profileImageUrl, username, parentCommentId, setIsReplyModalOpen}: Props
+ ) => {
     const [comment, setComment] = useState("");
 
     const addComment = useCommentStore((state) => state.addComment);
+    const addReply = useCommentStore((state) => state.addReply);
     
     const comments = useCommentStore((state) => state.comments);
 
@@ -29,7 +39,17 @@ const AddComment = ({ username, profileImageUrl }: Owner) => {
             replies: [],
         };
 
-        addComment(commentToAdd);
+        if (parentCommentId && setIsReplyModalOpen) {
+
+            // Add parent comment id to commentToAdd
+            commentToAdd.parentCommentId = parentCommentId;
+
+            addReply(parentCommentId, commentToAdd);
+            setIsReplyModalOpen(false);
+        }
+        else {
+            addComment(commentToAdd);
+        }
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,12 +80,24 @@ const AddComment = ({ username, profileImageUrl }: Owner) => {
                         name="comment"
                         id=""
                     />
-                    <button
-                        className="px-2 py-1 text-white bg-moderated-blue rounded-md"
-                        type="submit"
-                    >
-                        SEND
-                    </button>
+                    <div className="flex flex-col gap-1">
+                        <button
+                            className="px-2 py-1 text-white bg-moderated-blue rounded-md"
+                            type="submit"
+                        >
+                            SEND
+                        </button>
+
+                        {(parentCommentId && setIsReplyModalOpen) && (
+                            <button
+                                onClick={() => setIsReplyModalOpen(false)}
+                                className="px-2 py-1 text-white bg-soft-red rounded-md"
+                                type="button"
+                            >
+                                CANCEL
+                            </button>
+                        )}
+                    </div>
                 </form>
             </div>
         </div>

@@ -43,7 +43,7 @@ export default function Home() {
     }, [comments]);
 
     return (
-        <main className="my-6 flex min-h-screen flex-col items-center justify-between">
+        <main className="py-6 flex min-h-screen flex-col items-center">
             <div className="comments flex flex-col gap-6 max-w-xl mx-auto">
                 {myComments.map((comment: CommentType) => (
                     <Comment key={comment.id} {...comment} />
