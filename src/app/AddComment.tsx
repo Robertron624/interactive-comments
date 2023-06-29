@@ -8,24 +8,29 @@ interface Props {
     profileImageUrl: Owner["profileImageUrl"];
     username: Owner["username"];
     parentCommentId?: number;
-    setIsReplyModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+    setAddReplyMode?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const AddComment = ( 
-    { profileImageUrl, username, parentCommentId, setIsReplyModalOpen}: Props
- ) => {
+const AddComment = ({
+    profileImageUrl,
+    username,
+    parentCommentId,
+    setAddReplyMode,
+}: Props) => {
     const [comment, setComment] = useState("");
 
     const addComment = useCommentStore((state) => state.addComment);
     const addReply = useCommentStore((state) => state.addReply);
-    
+
     const comments = useCommentStore((state) => state.comments);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         // Get length of comments array and its replies
-        const commentsLength = comments.length + comments.reduce((acc, comment) => acc + comment.replies.length, 0);
+        const commentsLength =
+            comments.length +
+            comments.reduce((acc, comment) => acc + comment.replies.length, 0);
 
         const commentToAdd: Comment = {
             id: commentsLength + 1,
@@ -35,25 +40,29 @@ const AddComment = (
             },
             content: comment,
             score: 0,
-            createdAt: 'a few seconds ago',
+            createdAt: "a few seconds ago",
             replies: [],
         };
 
-        if (parentCommentId && setIsReplyModalOpen) {
-
+        if (parentCommentId && setAddReplyMode) {
             // Add parent comment id to commentToAdd
             commentToAdd.parentCommentId = parentCommentId;
 
             addReply(parentCommentId, commentToAdd);
-            setIsReplyModalOpen(false);
-        }
-        else {
+            setAddReplyMode(false);
+        } else {
             addComment(commentToAdd);
         }
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setComment(e.target.value);
+    };
+
+    const handleCancel = () => {
+        setComment("");
+
+        if (parentCommentId && setAddReplyMode) setAddReplyMode(false);
     };
 
     return (
@@ -77,6 +86,7 @@ const AddComment = (
                         className="rounded-md pl-4 w-96 h-24 border-2 border-light-gray bg-white"
                         onChange={handleChange}
                         name="comment"
+                        value={comment}
                     />
                     <div className="flex flex-col gap-1">
                         <button
@@ -86,9 +96,9 @@ const AddComment = (
                             {parentCommentId ? "REPLY" : "SEND"}
                         </button>
 
-                        {(parentCommentId && setIsReplyModalOpen) && (
+                        {parentCommentId && setAddReplyMode && (
                             <button
-                                onClick={() => setIsReplyModalOpen(false)}
+                                onClick={handleCancel}
                                 className="px-2 py-1 text-white bg-soft-red rounded-md"
                                 type="button"
                             >

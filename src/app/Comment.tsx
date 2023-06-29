@@ -23,8 +23,9 @@ const Comment = ({
     const isCurrentUser = owner.username === "juliusomo";
 
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
-    const [isReplyModalOpen, setIsReplyModalOpen] = useState<boolean>(false);
+    // const [isReplyModalOpen, setIsReplyModalOpen] = useState<boolean>(false);
     const [editMode, setEditMode] = useState<boolean>(false);
+    const [addReplyMode, setAddReplyMode] = useState<boolean>(false);
 
     const handleDelete = () => {
         setIsDeleteModalOpen(!isDeleteModalOpen);
@@ -57,7 +58,7 @@ const Comment = ({
     };
 
     const handleReply = () => {
-        setIsReplyModalOpen(!isReplyModalOpen);
+        setAddReplyMode(!addReplyMode);
     };
 
     return (
@@ -175,13 +176,6 @@ const Comment = ({
                                 </div>
                             ) : (
                                 <div>
-                                    <ReplyToComment
-                                        setIsReplyModalOpen={
-                                            setIsReplyModalOpen
-                                        }
-                                        isReplyModalOpen={isReplyModalOpen}
-                                        parentCommentId={id}
-                                    />
                                     <button
                                         onClick={handleReply}
                                         className="hover:opacity-70 transition-all transit text-sm text-moderated-blue font-bold flex items-center gap-2"
@@ -224,10 +218,31 @@ const Comment = ({
                     </div>
                 </div>
             </div>
+
+            {/* show reply component if addReply mode is true and there are not replies */}
+            {addReplyMode && replies.length === 0 && (
+                    <div className="flex flex-col gap-4 mt-4 ml-7 pl-7 border-l-2 border-light-gray">
+                        <ReplyToComment
+                            setAddReplyMode={setAddReplyMode}
+                            addReplyMode={addReplyMode}
+                            parentCommentId={id}
+                        />
+                </div>
+            )}
+
+
             {/* Replies section if there is any */}
             {replies.length > 0 && (
                 <div className="flex">
                     <div className="flex flex-col gap-4 mt-4 ml-7 pl-7 border-l-2 border-light-gray">
+                        {/* Add adding comment section if addReplyMode is true */}
+                        {addReplyMode && (
+                            <ReplyToComment
+                                setAddReplyMode={setAddReplyMode}
+                                addReplyMode={addReplyMode}
+                                parentCommentId={id}
+                            />
+                        )}
                         {replies.map((reply: Comment) => (
                             <Comment key={reply.id} {...reply} />
                         ))}

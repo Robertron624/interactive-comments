@@ -2,8 +2,8 @@ import cn from "classnames";
 import AddComment from "@/app/AddComment";
 
 interface Props {
-    setIsReplyModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    isReplyModalOpen: boolean;
+    addReplyMode: boolean;
+    setAddReplyMode: React.Dispatch<React.SetStateAction<boolean>>;
     parentCommentId?: number;
 }
 
@@ -17,22 +17,22 @@ const currentUser = {
 
 
 const ReplyToComment = (
-    {setIsReplyModalOpen, isReplyModalOpen, parentCommentId }: Props
+    { addReplyMode, parentCommentId, setAddReplyMode }: Props
 ) => {
 
     const modalClass = cn({
         'modal modal-bottom sm:modal-center': true,
-        'modal-open': isReplyModalOpen,
+        'modal-open': addReplyMode,
     })
 
   return (
-    <div className={`${modalClass} items-center`}>
-    <div className="modal-box fixed left-0 right-0 bg-white w-fit rounded-lg mx-auto text-grayish-blue p-6">
+    <div className={`items-center`}>
+    <div className="left-0 right-0 bg-white w-fit rounded-lg mx-auto text-grayish-blue p-6">
         <AddComment
             profileImageUrl={currentUser.profileImageUrl}
             username={currentUser.username}
             parentCommentId={parentCommentId}
-            setIsReplyModalOpen={setIsReplyModalOpen}
+            setAddReplyMode={setAddReplyMode}
         />
     </div>
 </div>
