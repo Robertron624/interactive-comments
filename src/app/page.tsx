@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import Comment from "./Comment";
 import AddComment from "./AddComment";
 import { Comment as CommentType } from "./types";
-// import { comments } from "./mockData";
 
 const currentUser = {
     profileImageUrl: {

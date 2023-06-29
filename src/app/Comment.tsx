@@ -5,7 +5,8 @@ import { useState } from "react";
 import Image from "next/image";
 import { useCommentStore } from "./store/commentStore";
 import RemoveCommentModal from "./RemoveComment";
-import ReplyToComment from "../../ReplyToComment";
+import ReplyToComment from "./ReplyToComment";
+import EditComment from "./EditComment";
 
 const Comment = ({
     id,
@@ -15,7 +16,7 @@ const Comment = ({
     replies,
     score,
     replyingTo,
-    parentCommentId
+    parentCommentId,
 }: Comment) => {
     const isReply = replyingTo !== undefined;
 
@@ -23,6 +24,7 @@ const Comment = ({
 
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
     const [isReplyModalOpen, setIsReplyModalOpen] = useState<boolean>(false);
+    const [editMode, setEditMode] = useState<boolean>(false);
 
     const handleDelete = () => {
         setIsDeleteModalOpen(!isDeleteModalOpen);
@@ -49,8 +51,7 @@ const Comment = ({
     const handleDownvote = () => {
         if (parentCommentId) {
             downVoteReply(parentCommentId, id);
-        }
-        else {
+        } else {
             downVoteComment(id);
         }
     };
@@ -155,7 +156,10 @@ const Comment = ({
                                         </svg>
                                         Delete
                                     </button>
-                                    <button className="hover:opacity-70 transition-all text-sm text-moderated-blue font-bold flex items-center gap-2">
+                                    <button
+                                        onClick={() => setEditMode(true)}
+                                        className="hover:opacity-70 transition-all text-sm text-moderated-blue font-bold flex items-center gap-2"
+                                    >
                                         <svg
                                             width="14"
                                             height="14"
@@ -178,7 +182,10 @@ const Comment = ({
                                         isReplyModalOpen={isReplyModalOpen}
                                         parentCommentId={id}
                                     />
-                                    <button onClick={handleReply} className="hover:opacity-70 transition-all transit text-sm text-moderated-blue font-bold flex items-center gap-2">
+                                    <button
+                                        onClick={handleReply}
+                                        className="hover:opacity-70 transition-all transit text-sm text-moderated-blue font-bold flex items-center gap-2"
+                                    >
                                         <svg
                                             width="14"
                                             height="13"
@@ -203,7 +210,16 @@ const Comment = ({
                                     </span>
                                 </span>
                             ) : null}
-                            {content}
+                            {editMode ? (
+                                <EditComment
+                                    commentId={id}
+                                    setEditMode={setEditMode}
+                                    oldComment={content}
+                                    parentCommentId={parentCommentId}
+                                />
+                            ) : (
+                                content
+                            )}
                         </div>
                     </div>
                 </div>
