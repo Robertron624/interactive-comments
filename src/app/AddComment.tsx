@@ -52,7 +52,7 @@ const AddComment = (
         }
     };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setComment(e.target.value);
     };
 
@@ -72,13 +72,11 @@ const AddComment = (
                     onSubmit={handleSubmit}
                     className="flex gap-3 items-start"
                 >
-                    <input
+                    <textarea
                         placeholder="Add a comment..."
                         className="rounded-md pl-4 w-96 h-24 border-2 border-light-gray bg-white"
                         onChange={handleChange}
-                        type="text"
                         name="comment"
-                        id=""
                     />
                     <div className="flex flex-col gap-1">
                         <button

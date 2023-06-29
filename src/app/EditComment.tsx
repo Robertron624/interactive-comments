@@ -18,7 +18,7 @@ const EditComment = (
     const editComment = useCommentStore((state) => state.updateComment);
     const editReply = useCommentStore((state) => state.updateReply);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setComment(e.target.value);
     };
 
@@ -41,12 +41,11 @@ const EditComment = (
                     onSubmit={handleSubmit}
                     className="flex gap-3 flex-col items-end"
                 >
-                    <input
+                    <textarea
                         placeholder="Add a comment..."
                         className="rounded-md pl-4 w-full h-24 border-2 border-light-gray bg-white"
                         onChange={handleChange}
                         value={comment}
-                        type="text"
                         name="comment"
                         id=""
                     />
