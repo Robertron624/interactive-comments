@@ -7,6 +7,7 @@ interface CommentState {
     setAllComments: (comments: Comment[]) => void;
     addComment: (comment: Comment) => void;
     addReply: (commentId: number, reply: Comment) => void;
+    addReplyToReply: (originalCommentId: number, reply: Comment) => void;
     removeComment: (commentId: number) => void;
     removeAllComments: () => void;
     removeReply: (commentId: number, replyId: number) => void;
@@ -30,6 +31,19 @@ export const useCommentStore = create<CommentState>()((set) => ({
             comments: state.comments.map((c) => {
                 if (c.id === commentId) {
                     return { ...c, replies: [...c.replies, reply] };
+                }
+                return c;
+            }),
+        })),
+    // Add reply to a reply will be store in the original comment but with a username of the reply it is replying to
+    addReplyToReply: (originalCommentId: number, reply: Comment) =>
+        set((state: { comments: Comment[] }) => ({
+            comments: state.comments.map((c) => {
+                if (c.id === originalCommentId) {
+                    return {
+                        ...c,
+                        replies: [...c.replies, reply],
+                    };
                 }
                 return c;
             }),

@@ -8,21 +8,35 @@ interface Props {
     profileImageUrl: Owner["profileImageUrl"];
     username: Owner["username"];
     parentCommentId?: number;
+    parentCommentUsername?: string;
     setAddReplyMode?: React.Dispatch<React.SetStateAction<boolean>>;
+    isReply?: boolean;
+    originalCommentId?: number;
 }
 
 const AddComment = ({
     profileImageUrl,
     username,
     parentCommentId,
+    parentCommentUsername,
     setAddReplyMode,
+    isReply,
+    originalCommentId,
 }: Props) => {
-    const [comment, setComment] = useState("");
+    const [comment, setComment] = useState(
+        parentCommentUsername ? `@${parentCommentUsername} ` : ""
+    );
+
+    // console.log(isReply ,parentCommentId, parentCommentUsername)
 
     const addComment = useCommentStore((state) => state.addComment);
     const addReply = useCommentStore((state) => state.addReply);
 
+    const addReplyToReply = useCommentStore((state) => state.addReplyToReply);
+
     const comments = useCommentStore((state) => state.comments);
+
+    console.log(isReply, originalCommentId)
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -48,7 +62,11 @@ const AddComment = ({
             // Add parent comment id to commentToAdd
             commentToAdd.parentCommentId = parentCommentId;
 
-            addReply(parentCommentId, commentToAdd);
+            if(isReply && originalCommentId) {
+                addReplyToReply(originalCommentId, commentToAdd);
+            } else {
+                addReply(parentCommentId, commentToAdd);
+            }
             setAddReplyMode(false);
         } else {
             addComment(commentToAdd);

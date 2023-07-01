@@ -5,6 +5,9 @@ interface Props {
     addReplyMode: boolean;
     setAddReplyMode: React.Dispatch<React.SetStateAction<boolean>>;
     parentCommentId?: number;
+    originalCommentId?: number;
+    parentCommentUsername?: string;
+    isReply: boolean;
 }
 
 const currentUser = {
@@ -17,13 +20,15 @@ const currentUser = {
 
 
 const ReplyToComment = (
-    { addReplyMode, parentCommentId, setAddReplyMode }: Props
+    { addReplyMode, parentCommentId, setAddReplyMode, parentCommentUsername, isReply, originalCommentId}: Props
 ) => {
 
     const modalClass = cn({
         'modal modal-bottom sm:modal-center': true,
         'modal-open': addReplyMode,
     })
+
+    console.log( parentCommentId, isReply, originalCommentId)
 
   return (
     <div className={`items-center`}>
@@ -32,7 +37,10 @@ const ReplyToComment = (
             profileImageUrl={currentUser.profileImageUrl}
             username={currentUser.username}
             parentCommentId={parentCommentId}
+            parentCommentUsername={parentCommentUsername}
             setAddReplyMode={setAddReplyMode}
+            isReply={isReply}
+            originalCommentId={originalCommentId}
         />
     </div>
 </div>

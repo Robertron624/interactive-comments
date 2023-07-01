@@ -226,6 +226,8 @@ const Comment = ({
                             setAddReplyMode={setAddReplyMode}
                             addReplyMode={addReplyMode}
                             parentCommentId={id}
+                            isReply={isReply}
+                            originalCommentId={parentCommentId}
                         />
                 </div>
             )}
@@ -241,6 +243,9 @@ const Comment = ({
                                 setAddReplyMode={setAddReplyMode}
                                 addReplyMode={addReplyMode}
                                 parentCommentId={id}
+                                originalCommentId={parentCommentId}
+                                parentCommentUsername={owner.username}
+                                isReply={isReply}
                             />
                         )}
                         {replies.map((reply: Comment) => (
