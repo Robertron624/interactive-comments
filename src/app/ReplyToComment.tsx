@@ -1,4 +1,3 @@
-import cn from "classnames";
 import AddComment from "@/app/AddComment";
 
 interface Props {
@@ -22,13 +21,6 @@ const currentUser = {
 const ReplyToComment = (
     { addReplyMode, parentCommentId, setAddReplyMode, parentCommentUsername, isReply, originalCommentId}: Props
 ) => {
-
-    const modalClass = cn({
-        'modal modal-bottom sm:modal-center': true,
-        'modal-open': addReplyMode,
-    })
-
-    console.log( parentCommentId, isReply, originalCommentId)
 
   return (
     <div className={`items-center`}>

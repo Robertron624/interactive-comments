@@ -228,6 +228,7 @@ const Comment = ({
                             parentCommentId={id}
                             isReply={isReply}
                             originalCommentId={parentCommentId}
+                            parentCommentUsername={owner.username}
                         />
                 </div>
             )}

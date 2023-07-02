@@ -23,11 +23,7 @@ const AddComment = ({
     isReply,
     originalCommentId,
 }: Props) => {
-    const [comment, setComment] = useState(
-        parentCommentUsername ? `@${parentCommentUsername} ` : ""
-    );
-
-    // console.log(isReply ,parentCommentId, parentCommentUsername)
+    const [comment, setComment] = useState("");
 
     const addComment = useCommentStore((state) => state.addComment);
     const addReply = useCommentStore((state) => state.addReply);
@@ -36,7 +32,7 @@ const AddComment = ({
 
     const comments = useCommentStore((state) => state.comments);
 
-    console.log(isReply, originalCommentId)
+
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -59,16 +55,21 @@ const AddComment = ({
         };
 
         if (parentCommentId && setAddReplyMode) {
-            // Add parent comment id to commentToAdd
-            commentToAdd.parentCommentId = parentCommentId;
+            // Add replyingTo
 
-            if(isReply && originalCommentId) {
+            commentToAdd.replyingTo = parentCommentUsername;
+
+            if (isReply && originalCommentId) {
+                commentToAdd.parentCommentId = originalCommentId;
                 addReplyToReply(originalCommentId, commentToAdd);
             } else {
+                // Add parent comment id to commentToAdd
+                commentToAdd.parentCommentId = parentCommentId;
                 addReply(parentCommentId, commentToAdd);
             }
             setAddReplyMode(false);
         } else {
+            // Is an original comment
             addComment(commentToAdd);
         }
     };
