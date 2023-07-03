@@ -7,6 +7,7 @@ import { useCommentStore } from "./store/commentStore";
 import RemoveCommentModal from "./RemoveComment";
 import ReplyToComment from "./ReplyToComment";
 import EditComment from "./EditComment";
+import { timeSince } from "./utils";
 
 const Comment = ({
     id,
@@ -125,7 +126,7 @@ const Comment = ({
                                             )}
                                         </span>
                                         <span className="text-sm text-grayish-blue">
-                                            {createdAt}
+                                            {timeSince(createdAt)}
                                         </span>
                                     </div>{" "}
                                 </div>

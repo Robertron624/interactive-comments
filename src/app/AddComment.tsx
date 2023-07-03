@@ -42,6 +42,9 @@ const AddComment = ({
             comments.length +
             comments.reduce((acc, comment) => acc + comment.replies.length, 0);
 
+        // new date in format YYYY-MM-DD-T-HH-MM-SS
+        const date = new Date().toISOString()
+
         const commentToAdd: Comment = {
             id: commentsLength + 1,
             owner: {
@@ -50,7 +53,7 @@ const AddComment = ({
             },
             content: comment,
             score: 0,
-            createdAt: "a few seconds ago",
+            createdAt: date,
             replies: [],
         };
 
@@ -83,8 +86,6 @@ const AddComment = ({
 
         if (parentCommentId && setAddReplyMode) setAddReplyMode(false);
     };
-
-    console.log("isReply", isReply)
 
     return (
         <div className={`bg-white rounded-lg  md:w-144 mt-4 mx-auto text-grayish-blue p-6 ${setAddReplyMode ? 'w-[21rem]' : 'w-[22rem]'}`}>
