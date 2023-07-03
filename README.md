@@ -28,9 +28,6 @@ This is a solution to the [Interactive comments section challenge on Frontend Me
   - [Continued development](#continued-development)
   - [Useful resources](#useful-resources)
 - [Author](#author)
-- [Acknowledgments](#acknowledgments)
-
-**Note: Delete this note and update the table of contents based on what sections you keep.**
 
 ## Overview
 
@@ -47,10 +44,12 @@ Users should be able to:
 
 ### Screenshot
 
+![](./screenshot.png)
+
 ### Links
 
 - Solution URL: [Github repo](https://github.com/Robertron624/interactive-comments)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Live Site URL: [Netlify Live Site](https://melodic-lamington-1297e9.netlify.app/)
 
 ## My process
 
@@ -69,27 +68,12 @@ Users should be able to:
 
 ### What I learned
 
-Use this section to recap over some of your major learnings while working through this project. Writing these out and providing code samples of areas you want to highlight is a great way to reinforce your own knowledge.
+With this project I learned a lot about state management and how to use zustand with React, it's still my favorite global state management tool. I also learned how to use TypeScript with React and Next.js. I also learned a lot about tailwindcss with Next.js and how to add custom fonts and colors to tailwindcss. I also learned how to use the daisyui component library with tailwindcss for creating the delete comment modal. Finally I learned how to use the localStorage API to save and return the state of the app.
 
-To see how you can add code snippets, see below:
-
-```html
-<h1>Some HTML code I'm proud of</h1>
-```
-```css
-.proud-of-this-css {
-  color: papayawhip;
-}
-```
-```js
-const proudOfThisFunc = () => {
-  console.log('🎉')
-}
-```
 
 ### Continued development
 
-Use this section to outline areas that you want to continue focusing on in future projects. These could be concepts you're still not completely comfortable with or techniques you found useful that you want to refine and perfect.
+I want to keep using Next.js for creating mid-large projects that require routing, I prefer pure css or scss but I want to keep learning tailwindcss since it speeds up the styling process. I also want to keep using zustand for global state management and I want to keep using TypeScript for type checking since the industry is going this way. Finally I want to convert this project into a fullstack project with a backend and database.
 
 ### Useful resources
 
@@ -106,7 +90,3 @@ Use this section to outline areas that you want to continue focusing on in futur
 - Personal Website - [Robert Ramirez](https://robert-ramirez.netlify.app)
 - Frontend Mentor User- [@Robertron624](https://www.frontendmentor.io/profile/Robertron624)
 - Twitter - [@robertdowny](https://www.twitter.com/robertdowny)
-
-## Acknowledgments
-
-This is where you can give a hat tip to anyone who helped you out on this project. Perhaps you worked in a team or got some inspiration from someone else's solution. This is the perfect place to give them some credit.
