@@ -89,7 +89,7 @@ const AddComment = ({
     return (
         <div className={`bg-white rounded-lg  md:w-144 mt-4 mx-auto text-grayish-blue p-6 ${setAddReplyMode ? 'w-[21rem]' : 'w-[22rem]'}`}>
             <div className={`h-full flex gap-4 justify-center`}>
-                <div className="hidden md:block">
+                <div className="hidden md:block flex-none">
                     <Image
                         src={profileImageUrl.png}
                         alt={`${username}'s profile picture`}
@@ -119,7 +119,7 @@ const AddComment = ({
                     />
                     <div className="flex gap-2">
                         <button
-                            className="hover:opacity-70 transition-all px-2 py-1 text-white bg-moderated-blue rounded-md"
+                            className="hover:opacity-70 transition-all w-[5rem] py-2     text-white bg-moderated-blue rounded-md"
                             type="submit"
                         >
                             {parentCommentId ? "REPLY" : "SEND"}
