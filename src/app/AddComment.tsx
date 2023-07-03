@@ -84,9 +84,11 @@ const AddComment = ({
         if (parentCommentId && setAddReplyMode) setAddReplyMode(false);
     };
 
+    console.log("isReply", isReply)
+
     return (
-        <div className="bg-white rounded-lg w-[22rem] md:w-144 mt-4 mx-auto text-grayish-blue p-6">
-            <div className="h-full flex gap-4 justify-center">
+        <div className={`bg-white rounded-lg  md:w-144 mt-4 mx-auto text-grayish-blue p-6 ${setAddReplyMode ? 'w-[21rem]' : 'w-[22rem]'}`}>
+            <div className={`h-full flex gap-4 justify-center`}>
                 <div className="hidden md:block">
                     <Image
                         src={profileImageUrl.png}
@@ -107,14 +109,15 @@ const AddComment = ({
                         name="comment"
                         value={comment}
                     />
-                    <div className="flex flex-row justify-between md:flex-col gap-1 w-full">
+                    <div className="flex flex-row justify-between md:flex-col gap-1 w-full md:w-auto">
                     <Image
                         src={profileImageUrl.png}
                         alt={`${username}'s profile picture`}
                         width={20}
                         height={20}
-                        className="w-8 h-8 rounded-full"
+                        className="w-8 h-8 rounded-full md:hidden"
                     />
+                    <div className="flex gap-2">
                         <button
                             className="hover:opacity-70 transition-all px-2 py-1 text-white bg-moderated-blue rounded-md"
                             type="submit"
@@ -131,6 +134,7 @@ const AddComment = ({
                                 CANCEL
                             </button>
                         )}
+                    </div>
                     </div>
                 </form>
             </div>

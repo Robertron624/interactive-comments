@@ -97,6 +97,8 @@ Use this section to outline areas that you want to continue focusing on in futur
 
 - [Tailwind css official docs](https://tailwindcss.com/docs/) - This is essential for learning tailwindcss.
 
+- [Tailwind responsive design](https://tailwindcss.com/docs/responsive-design) - This helped me to make the site responsive with tailwind that follows the mobile-first design.
+
 - [DaisyUI - Modal](https://daisyui.com/components/modal/) - This is a tailwindcss component library that I used to style the remove comment modal.
 
 ## Author

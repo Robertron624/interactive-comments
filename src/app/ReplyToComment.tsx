@@ -24,7 +24,7 @@ const ReplyToComment = (
 
   return (
     <div className={`items-center`}>
-    <div className="left-0 right-0 bg-white w-fit rounded-lg mx-auto text-grayish-blue p-6">
+    <div className={`left-0 right-0 bg-white ${isReply ? 'w-auto': 'w-fit'} rounded-lg mx-auto text-grayish-blue p-0 md:p-6`}>
         <AddComment
             profileImageUrl={currentUser.profileImageUrl}
             username={currentUser.username}

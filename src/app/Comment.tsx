@@ -321,7 +321,7 @@ const Comment = ({
 
             {/* show reply component if addReply mode is true and there are not replies */}
             {addReplyMode && replies.length === 0 && (
-                <div className="flex flex-col gap-4 mt-4 ml-7 pl-7 border-l-2 border-light-gray">
+                <div className="flex flex-col gap-4 mt-4 md:ml-7 pl-4 md:pl-7 border-l-2 border-light-gray">
                     <ReplyToComment
                         setAddReplyMode={setAddReplyMode}
                         addReplyMode={addReplyMode}
@@ -336,7 +336,7 @@ const Comment = ({
             {/* Replies section if there is any */}
             {replies.length > 0 && (
                 <div className="flex">
-                    <div className="flex flex-col gap-4 mt-4 ml-7 pl-7 border-l-2 border-light-gray">
+                    <div className="flex flex-col gap-4 mt-4 md:ml-7 pl-4 md:pl-7 border-l-2 border-light-gray">
                         {/* Add adding comment section if addReplyMode is true */}
                         {addReplyMode && (
                             <ReplyToComment
