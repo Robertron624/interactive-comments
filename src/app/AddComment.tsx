@@ -85,9 +85,9 @@ const AddComment = ({
     };
 
     return (
-        <div className="bg-white rounded-lg w-144 mt-4 mx-auto text-grayish-blue p-6">
+        <div className="bg-white rounded-lg w-[22rem] md:w-144 mt-4 mx-auto text-grayish-blue p-6">
             <div className="h-full flex gap-4 justify-center">
-                <div>
+                <div className="hidden md:block">
                     <Image
                         src={profileImageUrl.png}
                         alt={`${username}'s profile picture`}
@@ -98,16 +98,23 @@ const AddComment = ({
                 </div>
                 <form
                     onSubmit={handleSubmit}
-                    className="flex gap-3 items-start"
+                    className="flex flex-col md:flex-row gap-3 items-start w-full"
                 >
                     <textarea
                         placeholder="Add a comment..."
-                        className="rounded-md pl-4 w-96 h-24 border-2 border-light-gray bg-white"
+                        className="rounded-md pl-4 w-full md:w-96 h-24 border-2 border-light-gray bg-white"
                         onChange={handleChange}
                         name="comment"
                         value={comment}
                     />
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-row justify-between md:flex-col gap-1 w-full">
+                    <Image
+                        src={profileImageUrl.png}
+                        alt={`${username}'s profile picture`}
+                        width={20}
+                        height={20}
+                        className="w-8 h-8 rounded-full"
+                    />
                         <button
                             className="hover:opacity-70 transition-all px-2 py-1 text-white bg-moderated-blue rounded-md"
                             type="submit"
