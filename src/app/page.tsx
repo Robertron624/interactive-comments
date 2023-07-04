@@ -43,6 +43,7 @@ export default function Home() {
 
     return (
         <main className="py-6 flex min-h-screen flex-col items-center">
+            <h1 className="sr-only">Interactive Comments</h1>
             <div className="comments flex flex-col gap-6 max-w-[22rem] md:max-w-xl mx-auto">
                 {myComments.map((comment: CommentType) => (
                     <Comment key={comment.id} {...comment} />
