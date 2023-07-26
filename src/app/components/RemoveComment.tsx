@@ -1,5 +1,5 @@
 import React from "react";
-import { useCommentStore } from "./store/commentStore";
+import { useCommentStore } from "../store/commentStore";
 import cn from "classnames";
 
 interface Props {

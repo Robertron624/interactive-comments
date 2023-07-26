@@ -1,4 +1,4 @@
-import AddComment from "@/app/AddComment";
+import AddComment from "@/app/components/AddComment";
 
 interface Props {
     addReplyMode: boolean;

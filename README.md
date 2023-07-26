@@ -70,7 +70,6 @@ Users should be able to:
 
 With this project I learned a lot about state management and how to use zustand with React, it's still my favorite global state management tool. I also learned how to use TypeScript with React and Next.js. I also learned a lot about tailwindcss with Next.js and how to add custom fonts and colors to tailwindcss. I also learned how to use the daisyui component library with tailwindcss for creating the delete comment modal. Finally I learned how to use the localStorage API to save and return the state of the app.
 
-
 ### Continued development
 
 I want to keep using Next.js for creating mid-large projects that require routing, I prefer pure css or scss but I want to keep learning tailwindcss since it speeds up the styling process. I also want to keep using zustand for global state management and I want to keep using TypeScript for type checking since the industry is going this way. Finally I want to convert this project into a fullstack project with a backend and database.
@@ -90,3 +89,12 @@ I want to keep using Next.js for creating mid-large projects that require routin
 - Personal Website - [Robert Ramirez](https://robert-ramirez.netlify.app)
 - Frontend Mentor User- [@Robertron624](https://www.frontendmentor.io/profile/Robertron624)
 - Twitter - [@robertdowny](https://www.twitter.com/robertdowny)
+
+# Fullstack version
+
+## Cloud database
+
+I will be using firebase for the database and authentication.
+
+
+

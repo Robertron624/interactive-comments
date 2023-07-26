@@ -1,13 +1,13 @@
 "use client";
 
-import { Comment } from "./types";
+import { Comment } from "../types";
 import { useState } from "react";
 import Image from "next/image";
-import { useCommentStore } from "./store/commentStore";
+import { useCommentStore } from "../store/commentStore";
 import RemoveCommentModal from "./RemoveComment";
 import ReplyToComment from "./ReplyToComment";
 import EditComment from "./EditComment";
-import { timeSince } from "./utils";
+import { timeSince } from "../utils";
 
 const Comment = ({
     id,

@@ -1,9 +1,13 @@
-"use client"
+"use client";
 import { useCommentStore } from "./store/commentStore";
 import { useState, useEffect } from "react";
-import Comment from "./Comment";
-import AddComment from "./AddComment";
+import Comment from "./components/Comment";
+import AddComment from "./components/AddComment";
 import { Comment as CommentType } from "./types";
+
+import { db, auth } from "@/utils/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import GoogleLogin from "./components/GoogleLogin";
 
 const currentUser = {
     profileImageUrl: {
@@ -14,10 +18,11 @@ const currentUser = {
 };
 
 export default function Home() {
+    const [user, loading] = useAuthState(auth);
 
-    const comments = useCommentStore(state => state.comments);
+    const comments = useCommentStore((state) => state.comments);
 
-    const setAllComments = useCommentStore(state => state.setAllComments);
+    const setAllComments = useCommentStore((state) => state.setAllComments);
 
     const [myComments, setMyComments] = useState<CommentType[]>(comments);
 
@@ -49,10 +54,12 @@ export default function Home() {
                     <Comment key={comment.id} {...comment} />
                 ))}
             </div>
-            <AddComment
-                profileImageUrl={currentUser.profileImageUrl}
-                username={currentUser.username}
-            />
+            {user ? (
+                <AddComment
+                    profileImageUrl={currentUser.profileImageUrl}
+                    username={currentUser.username}
+                />
+            ): <GoogleLogin />}
         </main>
     );
 }

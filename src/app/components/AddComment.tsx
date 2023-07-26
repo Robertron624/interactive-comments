@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import { Owner, Comment } from "./types";
-import { useCommentStore } from "./store/commentStore";
+import { Owner, Comment } from "../types";
+import { useCommentStore } from "../store/commentStore";
 
 interface Props {
     profileImageUrl: Owner["profileImageUrl"];

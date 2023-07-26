@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useCommentStore } from "./store/commentStore";
+import { useCommentStore } from "../store/commentStore";
 
 interface Props {
     commentId: number;
