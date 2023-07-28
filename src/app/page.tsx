@@ -8,6 +8,8 @@ import { Comment as CommentType } from "./types";
 import { db, auth } from "@/utils/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import GoogleLogin from "./components/GoogleLogin";
+import RootLayout from "./layout";
+import Header from "@/Header";
 
 const currentUser = {
     profileImageUrl: {
@@ -47,19 +49,22 @@ export default function Home() {
     }, [comments]);
 
     return (
-        <main className="py-6 flex min-h-screen flex-col items-center">
-            <h1 className="sr-only">Interactive Comments</h1>
-            <div className="comments flex flex-col gap-6 max-w-[22rem] md:max-w-xl mx-auto">
-                {myComments.map((comment: CommentType) => (
-                    <Comment key={comment.id} {...comment} />
-                ))}
-            </div>
-            {user ? (
-                <AddComment
-                    profileImageUrl={currentUser.profileImageUrl}
-                    username={currentUser.username}
-                />
-            ): <GoogleLogin />}
-        </main>
+        <RootLayout>
+            <Header />
+            <main className="py-6 flex min-h-screen flex-col items-center">
+                <h1 className="sr-only">Interactive Comments</h1>
+                <div className="comments flex flex-col gap-6 max-w-[22rem] md:max-w-xl mx-auto mb-8">
+                    {myComments.map((comment: CommentType) => (
+                        <Comment key={comment.id} {...comment} />
+                    ))}
+                </div>
+                {user ? (
+                    <AddComment
+                        profileImageUrl={currentUser.profileImageUrl}
+                        username={currentUser.username}
+                    />
+                ): <GoogleLogin />}
+            </main>
+        </RootLayout>
     );
 }

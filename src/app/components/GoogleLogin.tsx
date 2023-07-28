@@ -12,9 +12,9 @@ const GoogleLogin = () => {
 
 
   return (
-    <div className='text-dark-blue'>
-        <h4 className='mb-2'>
-            Please login with your Google account to continue
+    <div className='text-dark-blue max-w-[22rem] md:max-w-xl mx-auto p-4 bg-white rounded-sm'>
+        <h4 className='mb-2 text-sm'>
+            Please login with your Google account to write a comment
         </h4>
         <button onClick={handleLogin} className='flex gap-2 bg-light-grayish-blue p-2 rounded-md items-center'>
             <FcGoogle />
