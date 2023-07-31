@@ -64,7 +64,3 @@ export default function Home() {
         </RootLayout>
     );
 }
-
-// {myComments.map((comment: CommentType) => (
-//     <Comment key={comment.id} {...comment} />
-// ))}

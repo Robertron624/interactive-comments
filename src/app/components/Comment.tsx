@@ -3,13 +3,15 @@
 import { Comment } from "../types";
 import { useState } from "react";
 import Image from "next/image";
-import { useCommentStore } from "../store/commentStore";
 import RemoveCommentModal from "./RemoveComment";
 import ReplyToComment from "./ReplyToComment";
 import EditComment from "./EditComment";
 import { timeSince } from "../utils";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/utils/firebase";
+
+import { db } from "@/utils/firebase";
+import { doc, updateDoc } from "firebase/firestore";
 
 const Comment = ({
     id,
@@ -36,24 +38,33 @@ const Comment = ({
         setIsDeleteModalOpen(!isDeleteModalOpen);
     };
 
-    const upVoteComment = useCommentStore((state) => state.upVoteComment);
-    const upVoteReply = useCommentStore((state) => state.upVoteReply);
     const handleUpvote = () => {
-        if (parentCommentId) {
+        // if (parentCommentId) {
             
-        } else {
-            
+        // }
+        // Search for comment in firestore
+        const commentRef = doc(db, "comments", id);
+
+        // Update comment in firestore with new score
+        const updatedComment = {
+            score: score + 1,
         }
+        updateDoc(commentRef, updatedComment);
+        
     };
 
-    const downVoteComment = useCommentStore((state) => state.downVoteComment);
-    const downVoteReply = useCommentStore((state) => state.downVoteReply);
     const handleDownvote = () => {
-        if (parentCommentId) {
+        // if (parentCommentId) {
             
-        } else {
-           
+        // }
+        // Search for comment in firestore
+        const commentRef = doc(db, "comments", id);
+
+        // Update comment in firestore with new score
+        const updatedComment = {
+            score: score - 1,
         }
+        updateDoc(commentRef, updatedComment);
     };
 
     const handleReply = () => {
