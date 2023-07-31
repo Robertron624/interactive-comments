@@ -10,10 +10,7 @@ interface Props {
 }
 
 const currentUser = {
-    profileImageUrl: {
-        png: "/avatars/image-juliusomo.png",
-        webp: "/avatars/image-juliusomo.webp",
-    },
+    profileImageUrl: "/avatars/image-juliusomo.png",
     username: "juliusomo",
 };
 

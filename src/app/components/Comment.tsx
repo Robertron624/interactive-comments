@@ -62,6 +62,8 @@ const Comment = ({
         setAddReplyMode(!addReplyMode);
     };
 
+    console.log("Replies -> ", replies)
+
     return (
         <div>
             <div className="bg-white rounded-lg w-500 text-grayish-blue p-6">
@@ -115,7 +117,7 @@ const Comment = ({
                                     width={20}
                                     height={20}
                                     className="w-8 h-8 rounded-full"
-                                    src={owner.profileImageUrl.png}
+                                    src={owner.profileImageUrl}
                                     alt={`${owner.username}'s profile image`}
                                 />
                                 <div className="flex flex-col gap-1">
@@ -340,9 +342,9 @@ const Comment = ({
             )}
 
             {/* Replies section if there is any */}
-            {replies.length > 0 && (
+            {(replies && replies.length > 0) && (
                 <div className="flex">
-                    <div className="flex flex-col gap-4 mt-4 md:ml-7 pl-4 md:pl-7 border-l-2 border-light-gray">
+                    <div className="flex flex-col gap-4 mt-4 md:ml-7 pl-4 md:pl-7 border-l-2 w-full border-light-gray">
                         {/* Add adding comment section if addReplyMode is true */}
                         {addReplyMode && (
                             <ReplyToComment

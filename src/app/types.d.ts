@@ -11,8 +11,5 @@ export interface Comment {
 
 export interface Owner {
     username: string;
-    profileImageUrl: {
-        png: string;
-        webp: string;
-    };
+    profileImageUrl: string;
 }

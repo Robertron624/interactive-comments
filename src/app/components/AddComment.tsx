@@ -4,9 +4,14 @@ import Image from "next/image";
 import { Owner, Comment } from "../types";
 import { useCommentStore } from "../store/commentStore";
 
+import { addDoc, collection, doc, serverTimestamp, updateDoc } from "firebase/firestore";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, db } from "@/utils/firebase";
+
+
 interface Props {
-    profileImageUrl: Owner["profileImageUrl"];
-    username: Owner["username"];
+    profileImageUrl: string | null;
+    username: Owner["username"] | null;
     parentCommentId?: number;
     parentCommentUsername?: string;
     setAddReplyMode?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -31,11 +36,24 @@ const AddComment = ({
     const addReplyToReply = useCommentStore((state) => state.addReplyToReply);
 
     const comments = useCommentStore((state) => state.comments);
+    
+
+    // firebase auth
+
+    const [user, loading] = useAuthState(auth);
 
 
-
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        // Check if comment is empty
+
+        if (!comment) {
+            alert("Comment cannot be empty") 
+            return;
+        }
+
+        const collectionRef = collection(db, "comments");
 
         // Get length of comments array and its replies
         const commentsLength =
@@ -45,11 +63,10 @@ const AddComment = ({
         // new date in format YYYY-MM-DD-T-HH-MM-SS
         const date = new Date().toISOString()
 
-        const commentToAdd: Comment = {
-            id: commentsLength + 1,
+        const commentToAdd = {
             owner: {
-                username,
-                profileImageUrl,
+                username: user?.displayName,
+                profileImageUrl: user?.photoURL,
             },
             content: comment,
             score: 0,
@@ -57,24 +74,30 @@ const AddComment = ({
             replies: [],
         };
 
-        if (parentCommentId && setAddReplyMode) {
-            // Add replyingTo
+        await addDoc(collectionRef, commentToAdd);
 
-            commentToAdd.replyingTo = parentCommentUsername;
+        setComment("");
 
-            if (isReply && originalCommentId) {
-                commentToAdd.parentCommentId = originalCommentId;
-                addReplyToReply(originalCommentId, commentToAdd);
-            } else {
-                // Add parent comment id to commentToAdd
-                commentToAdd.parentCommentId = parentCommentId;
-                addReply(parentCommentId, commentToAdd);
-            }
-            setAddReplyMode(false);
-        } else {
-            // Is an original comment
-            addComment(commentToAdd);
-        }
+        alert("Comment added successfully")
+
+        // if (parentCommentId && setAddReplyMode) {
+        //     // Add replyingTo
+
+        //     commentToAdd.replyingTo = parentCommentUsername;
+
+        //     if (isReply && originalCommentId) {
+        //         commentToAdd.parentCommentId = originalCommentId;
+        //         addReplyToReply(originalCommentId, commentToAdd);
+        //     } else {
+        //         // Add parent comment id to commentToAdd
+        //         commentToAdd.parentCommentId = parentCommentId;
+        //         addReply(parentCommentId, commentToAdd);
+        //     }
+        //     setAddReplyMode(false);
+        // } else {
+        //     // Is an original comment
+        //     addComment(commentToAdd);
+        // }
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -92,8 +115,8 @@ const AddComment = ({
             <div className={`h-full flex gap-4 justify-center`}>
                 <div className="hidden md:block flex-none">
                     <Image
-                        src={profileImageUrl.png}
-                        alt={`${username}'s profile picture`}
+                        src={profileImageUrl || "/images/user.svg"}
+                        alt={`${user?.displayName}'s profile picture`}
                         width={20}
                         height={20}
                         className="w-8 h-8 rounded-full"
@@ -112,8 +135,8 @@ const AddComment = ({
                     />
                     <div className="flex flex-row justify-between md:flex-col gap-1 w-full md:w-auto">
                     <Image
-                        src={profileImageUrl.png}
-                        alt={`${username}'s profile picture`}
+                        src={profileImageUrl || "/images/user.svg"}
+                        alt={`${user?.displayName}'s profile picture`}
                         width={20}
                         height={20}
                         className="w-8 h-8 rounded-full md:hidden"
