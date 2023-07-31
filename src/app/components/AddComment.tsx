@@ -12,7 +12,7 @@ import { auth, db } from "@/utils/firebase";
 interface Props {
     profileImageUrl: string | null;
     username: Owner["username"] | null;
-    parentCommentId?: number;
+    parentCommentId?: string;
     parentCommentUsername?: string;
     setAddReplyMode?: React.Dispatch<React.SetStateAction<boolean>>;
     isReply?: boolean;

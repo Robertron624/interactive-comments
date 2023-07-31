@@ -9,7 +9,6 @@ import { db, auth } from "@/utils/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 
-
 import GoogleLogin from "./components/GoogleLogin";
 import RootLayout from "./layout";
 import Header from "@/Header";
@@ -25,8 +24,15 @@ export default function Home() {
         const collectionRef = collection(db, "comments");
         const q = query(collectionRef, orderBy("createdAt", "desc"));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
-            
-            setMyComments(querySnapshot.docs.map((doc) => doc.data() as CommentType));
+
+            const comments = querySnapshot.docs.map((doc) => {
+                return {
+                    id: doc.id,
+                    ...doc.data(),
+                } as CommentType;
+            });
+
+            setMyComments(comments);
         });
 
         return unsubscribe;
@@ -42,17 +48,23 @@ export default function Home() {
             <main className="py-6 flex min-h-screen flex-col items-center">
                 <h1 className="sr-only">Interactive Comments</h1>
                 <div className="comments flex flex-col gap-6 w-[22rem] md:w-[36rem] mx-auto mb-8">
-                    {myComments.map((comment: CommentType) => (
-                        <Comment key={comment.id} {...comment} />
-                    ))}
+                    {myComments.map((comment: CommentType) => {
+                        return <Comment key={comment.id} {...comment} />;
+                    })}
                 </div>
                 {user ? (
                     <AddComment
                         username={user.displayName}
                         profileImageUrl={user.photoURL}
                     />
-                ): <GoogleLogin />}
+                ) : (
+                    <GoogleLogin />
+                )}
             </main>
         </RootLayout>
     );
 }
+
+// {myComments.map((comment: CommentType) => (
+//     <Comment key={comment.id} {...comment} />
+// ))}

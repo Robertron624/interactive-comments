@@ -1,9 +1,10 @@
 import React from "react";
-import { useCommentStore } from "../store/commentStore";
 import cn from "classnames";
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from "@/utils/firebase";
 
 interface Props {
-    commentId: number;
+    commentId: string;
     setIsDeleteModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
     isDeleteModalOpen: boolean;
     parentCommentId?: number;
@@ -12,15 +13,9 @@ interface Props {
 const RemoveCommentModal = (
     { commentId, setIsDeleteModalOpen, isDeleteModalOpen, parentCommentId }: Props
 ) => {
-    const removeComment = useCommentStore((state) => state.removeComment);
-    const removeReply = useCommentStore((state) => state.removeReply);
-
-    const handleRemove = () => {
-        if (parentCommentId) {
-            removeReply(parentCommentId, commentId);
-        } else {
-            removeComment(commentId);
-        }
+    const handleRemove = async() => {
+        const docRef = doc(db, "comments", commentId);
+        await deleteDoc(docRef);
         setIsDeleteModalOpen(!isDeleteModalOpen);
     };
 

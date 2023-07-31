@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useCommentStore } from "../store/commentStore";
 
 interface Props {
-    commentId: number;
+    commentId: string;
     setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
     oldComment: string;
     parentCommentId?: number;
@@ -27,11 +27,11 @@ const EditComment = (
 
         // if parentCommentId is defined, then we are editing a reply
         if (parentCommentId) {
-            editReply(parentCommentId, commentId, comment);
+            
             setEditMode(false);
             return;
         }
-        editComment(commentId, comment);
+        
         setEditMode(false);
     };
 

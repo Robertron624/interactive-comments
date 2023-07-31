@@ -1,5 +1,5 @@
 export interface Comment {
-    id: number;
+    id: string;
     content: string;
     createdAt: string;
     score: number;

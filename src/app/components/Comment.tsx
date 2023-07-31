@@ -8,6 +8,8 @@ import RemoveCommentModal from "./RemoveComment";
 import ReplyToComment from "./ReplyToComment";
 import EditComment from "./EditComment";
 import { timeSince } from "../utils";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/utils/firebase";
 
 const Comment = ({
     id,
@@ -21,7 +23,9 @@ const Comment = ({
 }: Comment) => {
     const isReply = replyingTo !== undefined;
 
-    const isCurrentUser = owner.username === "juliusomo";
+    const [user, loading] = useAuthState(auth)
+
+    const isCurrentUser = owner.username === user?.displayName;;
 
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
     // const [isReplyModalOpen, setIsReplyModalOpen] = useState<boolean>(false);
@@ -32,19 +36,13 @@ const Comment = ({
         setIsDeleteModalOpen(!isDeleteModalOpen);
     };
 
-    //TODO
-    const updateComment = useCommentStore((state) => state.updateComment);
-    const handleEdit = () => {
-        updateComment(id, "This is the updated comment");
-    };
-
     const upVoteComment = useCommentStore((state) => state.upVoteComment);
     const upVoteReply = useCommentStore((state) => state.upVoteReply);
     const handleUpvote = () => {
         if (parentCommentId) {
-            upVoteReply(parentCommentId, id);
+            
         } else {
-            upVoteComment(id);
+            
         }
     };
 
@@ -52,17 +50,15 @@ const Comment = ({
     const downVoteReply = useCommentStore((state) => state.downVoteReply);
     const handleDownvote = () => {
         if (parentCommentId) {
-            downVoteReply(parentCommentId, id);
+            
         } else {
-            downVoteComment(id);
+           
         }
     };
 
     const handleReply = () => {
         setAddReplyMode(!addReplyMode);
     };
-
-    console.log("Replies -> ", replies)
 
     return (
         <div>

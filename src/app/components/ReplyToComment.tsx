@@ -3,7 +3,7 @@ import AddComment from "@/app/components/AddComment";
 interface Props {
     addReplyMode: boolean;
     setAddReplyMode: React.Dispatch<React.SetStateAction<boolean>>;
-    parentCommentId?: number;
+    parentCommentId?: string;
     originalCommentId?: number;
     parentCommentUsername?: string;
     isReply: boolean;
