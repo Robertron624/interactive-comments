@@ -25,9 +25,9 @@ const Comment = ({
 }: Comment) => {
     const isReply = replyingTo !== undefined;
 
-    const [user, loading] = useAuthState(auth)
+    const [user, loading] = useAuthState(auth);
 
-    const isCurrentUser = owner.username === user?.displayName;;
+    const isCurrentUser = owner.username === user?.displayName;
 
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
     // const [isReplyModalOpen, setIsReplyModalOpen] = useState<boolean>(false);
@@ -40,7 +40,7 @@ const Comment = ({
 
     const handleUpvote = () => {
         // if (parentCommentId) {
-            
+
         // }
         // Search for comment in firestore
         const commentRef = doc(db, "comments", id);
@@ -48,14 +48,13 @@ const Comment = ({
         // Update comment in firestore with new score
         const updatedComment = {
             score: score + 1,
-        }
+        };
         updateDoc(commentRef, updatedComment);
-        
     };
 
     const handleDownvote = () => {
         // if (parentCommentId) {
-            
+
         // }
         // Search for comment in firestore
         const commentRef = doc(db, "comments", id);
@@ -63,7 +62,7 @@ const Comment = ({
         // Update comment in firestore with new score
         const updatedComment = {
             score: score - 1,
-        }
+        };
         updateDoc(commentRef, updatedComment);
     };
 
@@ -349,7 +348,7 @@ const Comment = ({
             )}
 
             {/* Replies section if there is any */}
-            {(replies && replies.length > 0) && (
+            {replies && replies.length > 0 && (
                 <div className="flex">
                     <div className="flex flex-col gap-4 mt-4 md:ml-7 pl-4 md:pl-7 border-l-2 w-full border-light-gray">
                         {/* Add adding comment section if addReplyMode is true */}

@@ -1,8 +1,7 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import { Owner, Comment } from "../types";
-import { useCommentStore } from "../store/commentStore";
+import { Owner } from "../types";
 
 import { addDoc, collection, doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -29,19 +28,11 @@ const AddComment = ({
     originalCommentId,
 }: Props) => {
     const [comment, setComment] = useState("");
-
-    const addComment = useCommentStore((state) => state.addComment);
-    const addReply = useCommentStore((state) => state.addReply);
-
-    const addReplyToReply = useCommentStore((state) => state.addReplyToReply);
-
-    const comments = useCommentStore((state) => state.comments);
     
 
     // firebase auth
 
     const [user, loading] = useAuthState(auth);
-
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -54,11 +45,6 @@ const AddComment = ({
         }
 
         const collectionRef = collection(db, "comments");
-
-        // Get length of comments array and its replies
-        const commentsLength =
-            comments.length +
-            comments.reduce((acc, comment) => acc + comment.replies.length, 0);
 
         // new date in format YYYY-MM-DD-T-HH-MM-SS
         const date = new Date().toISOString()
@@ -74,30 +60,39 @@ const AddComment = ({
             replies: [],
         };
 
-        await addDoc(collectionRef, commentToAdd);
+        // If parentCommentId exists, it's a reply as such add reply to original comment
+        if(parentCommentId) {
+
+            // Search for parent comment in comments array
+        
+            const docRef = doc(db, "comments", parentCommentId);
+
+            // Add reply to replies array
+            try {
+                await updateDoc(docRef, {
+                    replies: [
+                        ...commentToAdd.replies,
+                        commentToAdd
+                    ]
+                })
+            }
+            catch(err) {
+                console.log(err)
+            }
+        }
+        else {
+            try{
+                await addDoc(collectionRef, commentToAdd);
+            }
+            catch(err) {
+                console.log(err)
+            }
+        }
+
 
         setComment("");
 
         alert("Comment added successfully")
-
-        // if (parentCommentId && setAddReplyMode) {
-        //     // Add replyingTo
-
-        //     commentToAdd.replyingTo = parentCommentUsername;
-
-        //     if (isReply && originalCommentId) {
-        //         commentToAdd.parentCommentId = originalCommentId;
-        //         addReplyToReply(originalCommentId, commentToAdd);
-        //     } else {
-        //         // Add parent comment id to commentToAdd
-        //         commentToAdd.parentCommentId = parentCommentId;
-        //         addReply(parentCommentId, commentToAdd);
-        //     }
-        //     setAddReplyMode(false);
-        // } else {
-        //     // Is an original comment
-        //     addComment(commentToAdd);
-        // }
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
