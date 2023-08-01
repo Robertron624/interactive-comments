@@ -4,7 +4,7 @@ interface Props {
     addReplyMode: boolean;
     setAddReplyMode: React.Dispatch<React.SetStateAction<boolean>>;
     parentCommentId?: string;
-    originalCommentId?: number;
+    originalCommentId?: string;
     parentCommentUsername?: string;
     isReply: boolean;
 }

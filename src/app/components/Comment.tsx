@@ -21,6 +21,7 @@ const Comment = ({
     replies,
     score,
     replyingTo,
+    replyId,
     parentCommentId,
 }: Comment) => {
     const isReply = replyingTo !== undefined;
@@ -152,6 +153,14 @@ const Comment = ({
                                         }
                                         isDeleteModalOpen={isDeleteModalOpen}
                                         parentCommentId={parentCommentId}
+                                        replyId={replyId}
+                                        commentObject={{
+                                            owner,
+                                            content,
+                                            createdAt,
+                                            replies,
+                                            score,
+                                        }}
                                     />
                                     <button
                                         onClick={handleDelete}
@@ -276,6 +285,7 @@ const Comment = ({
                                         }
                                         isDeleteModalOpen={isDeleteModalOpen}
                                         parentCommentId={parentCommentId}
+                                        replyId={replyId}
                                     />
                                     <button
                                         onClick={handleDelete}
@@ -363,7 +373,9 @@ const Comment = ({
                             />
                         )}
                         {replies.map((reply: Comment) => (
-                            <Comment key={reply.id} {...reply} />
+                            <Comment key={reply.id} {...reply} parentCommentId={
+                                parentCommentId ? parentCommentId : id
+                            }/>
                         ))}
                     </div>
                 </div>

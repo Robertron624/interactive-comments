@@ -6,7 +6,7 @@ interface Props {
     commentId: string;
     setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
     oldComment: string;
-    parentCommentId?: number;
+    parentCommentId?: string;
 }
 
 const EditComment = ({
@@ -25,26 +25,43 @@ const EditComment = ({
         setComment(e.target.value);
     };
 
-    const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const docRef = doc(db, "comments", commentId);
 
-        // Update comment in firestore
-        const updatedComment = {
-            content: comment,
-            updatedAt: serverTimestamp(),
-        };
 
-        await updateDoc(docRef, updatedComment);
+        console.log("parentCommentId -> ", parentCommentId);
+
+        // If parentCommentId exists, it's a reply and as such, we need to update the parent comment's replies array with the new reply content
+        if (parentCommentId) {
+            // Add unique id to reply, this will be used to identify the reply in the UI, and also to identify the reply in the database since the reply will be stored in the replies array of the parent comment as a string
+
+            // Search for parent comment in comments array
+
+            console.log("parentCommentId -> ", parentCommentId)
+
+            // const docRef = doc(db, "comments", parentCommentId);
+                
+            // 
+
+
+        } else {
+            const docRef = doc(db, "comments", commentId);
+
+            // Update comment in firestore
+            const updatedComment = {
+                content: comment,
+                updatedAt: serverTimestamp(),
+            };
+
+            try {
+                await updateDoc(docRef, updatedComment);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+
         alert("Comment updated successfully");
-
-        // // if parentCommentId is defined, then we are editing a reply
-        // if (parentCommentId) {
-        //     setEditMode(false);
-        //     return;
-        // }
-
         setEditMode(false);
     };
 

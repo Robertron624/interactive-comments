@@ -11,7 +11,7 @@ import { auth, db } from "@/utils/firebase";
 interface Props {
     parentCommentId?: string;
     setAddReplyMode?: React.Dispatch<React.SetStateAction<boolean>>;
-    originalCommentId?: number;
+    originalCommentId?: string;
 }
 
 const AddComment = ({
