@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import { Owner } from "../types";
 
 import { addDoc, collection, doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -10,21 +9,15 @@ import { auth, db } from "@/utils/firebase";
 
 interface Props {
     profileImageUrl: string | null;
-    username: Owner["username"] | null;
     parentCommentId?: string;
-    parentCommentUsername?: string;
     setAddReplyMode?: React.Dispatch<React.SetStateAction<boolean>>;
-    isReply?: boolean;
     originalCommentId?: number;
 }
 
 const AddComment = ({
     profileImageUrl,
-    username,
     parentCommentId,
-    parentCommentUsername,
     setAddReplyMode,
-    isReply,
     originalCommentId,
 }: Props) => {
     const [comment, setComment] = useState("");
@@ -79,6 +72,9 @@ const AddComment = ({
             catch(err) {
                 console.log(err)
             }
+            finally {
+                if (setAddReplyMode) setAddReplyMode(false);
+            }
         }
         else {
             try{
@@ -110,7 +106,7 @@ const AddComment = ({
             <div className={`h-full flex gap-4 justify-center`}>
                 <div className="hidden md:block flex-none">
                     <Image
-                        src={profileImageUrl || "/images/user.svg"}
+                        src={user?.photoURL || "/images/user.svg"}
                         alt={`${user?.displayName}'s profile picture`}
                         width={20}
                         height={20}
@@ -130,7 +126,7 @@ const AddComment = ({
                     />
                     <div className="flex flex-row justify-between md:flex-col gap-1 w-full md:w-auto">
                     <Image
-                        src={profileImageUrl || "/images/user.svg"}
+                        src={user?.photoURL || "/images/user.svg"}
                         alt={`${user?.displayName}'s profile picture`}
                         width={20}
                         height={20}

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useCommentStore } from "../store/commentStore";
 import { doc, updateDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 
