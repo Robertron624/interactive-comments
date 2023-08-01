@@ -54,8 +54,6 @@ export default function Home() {
                 </div>
                 {user ? (
                     <AddComment
-                        username={user.displayName}
-                        profileImageUrl={user.photoURL}
                     />
                 ) : (
                     <GoogleLogin />

@@ -1,21 +1,20 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
+import { v4 as uuidv4 } from "uuid";
 
-import { addDoc, collection, doc, serverTimestamp, updateDoc } from "firebase/firestore";
+import { addDoc, collection, doc, updateDoc, arrayUnion } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "@/utils/firebase";
 
 
 interface Props {
-    profileImageUrl: string | null;
     parentCommentId?: string;
     setAddReplyMode?: React.Dispatch<React.SetStateAction<boolean>>;
     originalCommentId?: number;
 }
 
 const AddComment = ({
-    profileImageUrl,
     parentCommentId,
     setAddReplyMode,
     originalCommentId,
@@ -42,19 +41,22 @@ const AddComment = ({
         // new date in format YYYY-MM-DD-T-HH-MM-SS
         const date = new Date().toISOString()
 
-        const commentToAdd = {
-            owner: {
-                username: user?.displayName,
-                profileImageUrl: user?.photoURL,
-            },
-            content: comment,
-            score: 0,
-            createdAt: date,
-            replies: [],
-        };
-
-        // If parentCommentId exists, it's a reply as such add reply to original comment
+        // If parentCommentId exists, it's a reply and as such, add the reply to comment replies array
         if(parentCommentId) {
+
+            let commentToAdd = {
+                replyId: uuidv4(),
+                owner: {
+                    username: user?.displayName,
+                    profileImageUrl: user?.photoURL,
+                },
+                content: comment,
+                score: 0,
+                createdAt: date,
+                replies: [],
+            };
+
+            // Add unique id to reply, this will be used to identify the reply in the UI, and also to identify the reply in the database since the reply will be stored in the replies array of the parent comment as a string
 
             // Search for parent comment in comments array
         
@@ -62,12 +64,11 @@ const AddComment = ({
 
             // Add reply to replies array
             try {
+                // Add reply to replies array leaving the old replies array intact
                 await updateDoc(docRef, {
-                    replies: [
-                        ...commentToAdd.replies,
-                        commentToAdd
-                    ]
-                })
+                    replies: arrayUnion(commentToAdd)
+                });
+                
             }
             catch(err) {
                 console.log(err)
@@ -77,6 +78,16 @@ const AddComment = ({
             }
         }
         else {
+            let commentToAdd = {
+                owner: {
+                    username: user?.displayName,
+                    profileImageUrl: user?.photoURL,
+                },
+                content: comment,
+                score: 0,
+                createdAt: date,
+                replies: [],
+            };
             try{
                 await addDoc(collectionRef, commentToAdd);
             }
@@ -102,7 +113,7 @@ const AddComment = ({
     };
 
     return (
-        <div className={`bg-white rounded-lg  md:w-144 mt-4 mx-auto text-grayish-blue p-6 ${setAddReplyMode ? 'w-[21rem]' : 'w-[22rem]'}`}>
+        <div className={`bg-white rounded-lg mt-4 mx-auto text-grayish-blue p-6 ${parentCommentId ? 'w-[21rem] md:w-[29.5rem]' : 'w-[22rem] md:w-144'}`}>
             <div className={`h-full flex gap-4 justify-center`}>
                 <div className="hidden md:block flex-none">
                     <Image
@@ -132,7 +143,7 @@ const AddComment = ({
                         height={20}
                         className="w-8 h-8 rounded-full md:hidden"
                     />
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 flex-col">
                         <button
                             className="hover:opacity-70 transition-all w-[5rem] py-2     text-white bg-moderated-blue rounded-md"
                             type="submit"

@@ -1,6 +1,6 @@
 import React from "react";
 import cn from "classnames";
-import { deleteDoc, doc } from "firebase/firestore";
+import { arrayRemove, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 
 interface Props {
@@ -14,8 +14,29 @@ const RemoveCommentModal = (
     { commentId, setIsDeleteModalOpen, isDeleteModalOpen, parentCommentId }: Props
 ) => {
     const handleRemove = async() => {
-        const docRef = doc(db, "comments", commentId);
-        await deleteDoc(docRef);
+        
+
+        // If there is a parentCommentId, it's a reply, so we need to remove the reply from the replies array of the parent comment
+        if(parentCommentId) {
+            // const docRef = doc(db, "comments", parentCommentId);
+            try {
+                await updateDoc(docRef, {
+                    replies: arrayRemove(commentId),
+                });
+            }
+            catch (error) {
+                console.error("Error removing document: ", error);
+            }
+        }
+        else {
+            const docRef = doc(db, "comments", commentId);
+            try {
+                await deleteDoc(docRef);
+            }
+            catch (error) {
+                console.error("Error removing document: ", error);
+            }
+        }
         setIsDeleteModalOpen(!isDeleteModalOpen);
     };
 
