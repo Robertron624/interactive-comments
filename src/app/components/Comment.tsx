@@ -11,7 +11,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/utils/firebase";
 
 import { db } from "@/utils/firebase";
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 
 const Comment = ({
     id,
@@ -24,7 +24,7 @@ const Comment = ({
     replyId,
     parentCommentId,
 }: Comment) => {
-    const isReply = replyingTo !== undefined;
+    const isReply = replyId !== undefined;
 
     const [user, loading] = useAuthState(auth);
 
@@ -39,32 +39,92 @@ const Comment = ({
         setIsDeleteModalOpen(!isDeleteModalOpen);
     };
 
-    const handleUpvote = () => {
-        // if (parentCommentId) {
+    const handleUpvote = async () => {
+        if (isReply && parentCommentId) {
+            // Search for parent comment in firestore
+            const docRef = doc(db, "comments", parentCommentId);
 
-        // }
-        // Search for comment in firestore
-        const commentRef = doc(db, "comments", id);
+            // Update comment in firestore with new score
+            try {
+                // Get doc content from doc ref
+                const docSnap = await getDoc(docRef);
 
-        // Update comment in firestore with new score
-        const updatedComment = {
-            score: score + 1,
-        };
-        updateDoc(commentRef, updatedComment);
+                // Get replies array from doc snap
+                const repliesArray = docSnap.data()?.replies;
+
+                // Find reply in replies array
+                const replyIndex = repliesArray.findIndex(
+                    (reply: Comment) => reply.replyId === replyId
+                );
+
+                // Update reply in replies array by increasing score by 1
+                repliesArray[replyIndex].score += 1;
+
+                // Update replies array in firestore
+                await updateDoc(docRef, {
+                    replies: repliesArray,
+                });
+            } catch (error) {
+                console.error("Error updating document: ", error);
+            }
+        } else {
+            const commentRef = doc(db, "comments", id);
+
+            // Update comment in firestore with new score
+            const updatedComment = {
+                score: score + 1,
+            };
+
+            try {
+                updateDoc(commentRef, updatedComment);
+            } catch (error) {
+                console.error("Error updating document: ", error);
+            }
+        }
     };
 
-    const handleDownvote = () => {
-        // if (parentCommentId) {
+    const handleDownvote = async () => {
+        if (isReply && parentCommentId) {
+            // Search for parent comment in firestore
+            const docRef = doc(db, "comments", parentCommentId);
 
-        // }
-        // Search for comment in firestore
-        const commentRef = doc(db, "comments", id);
+            // Update comment in firestore with new score
+            try {
+                // Get doc content from doc ref
+                const docSnap = await getDoc(docRef);
 
-        // Update comment in firestore with new score
-        const updatedComment = {
-            score: score - 1,
-        };
-        updateDoc(commentRef, updatedComment);
+                // Get replies array from doc snap
+                const repliesArray = docSnap.data()?.replies;
+
+                // Find reply in replies array
+                const replyIndex = repliesArray.findIndex(
+                    (reply: Comment) => reply.replyId === replyId
+                );
+
+                // Update reply in replies array by increasing score by 1
+                repliesArray[replyIndex].score -= 1;
+
+                // Update replies array in firestore
+                await updateDoc(docRef, {
+                    replies: repliesArray,
+                });
+            } catch (error) {
+                console.error("Error updating document: ", error);
+            }
+        } else {
+            const commentRef = doc(db, "comments", id);
+
+            // Update comment in firestore with new score
+            const updatedComment = {
+                score: score + 1,
+            };
+
+            try {
+                updateDoc(commentRef, updatedComment);
+            } catch (error) {
+                console.error("Error updating document: ", error);
+            }
+        }
     };
 
     const handleReply = () => {
@@ -239,7 +299,6 @@ const Comment = ({
                                         replies,
                                         score,
                                     }}
-
                                 />
                             ) : (
                                 content
@@ -389,9 +448,13 @@ const Comment = ({
                             />
                         )}
                         {replies.map((reply: Comment) => (
-                            <Comment key={reply.replyId} {...reply} parentCommentId={
-                                parentCommentId ? parentCommentId : id
-                            }/>
+                            <Comment
+                                key={reply.replyId}
+                                {...reply}
+                                parentCommentId={
+                                    parentCommentId ? parentCommentId : id
+                                }
+                            />
                         ))}
                     </div>
                 </div>
