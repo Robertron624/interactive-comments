@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { doc, updateDoc, serverTimestamp, arrayUnion, collection, query, onSnapshot, where } from "firebase/firestore";
+import { doc, updateDoc, serverTimestamp, arrayUnion, collection, query, onSnapshot, where, arrayRemove, getDoc } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 
 import { Comment } from "../types";
@@ -52,47 +52,36 @@ const EditComment = ({
         if (replyId && parentCommentId) {
             // Add unique id to reply, this will be used to identify the reply in the UI, and also to identify the reply in the database since the reply will be stored in the replies array of the parent comment as a string
 
-            
-
             // Seach for parent comment in firebase
-            const collectionRef = collection(db, 'post');
-            const q = query(collectionRef, where("id", "==", parentCommentId));
+            const docRef = doc(db, "comments", parentCommentId);
 
-            const onSnapshotVar = onSnapshot(q, (querySnapshot) => {
-                const comments = querySnapshot.docs.map((doc) => {
-                    return {
-                        id: doc.id,
-                        ...doc.data(),
-                    } as Comment;
-                });
-                return comments;
-            });
-
-
-            // Update reply in replies array of parent comment 
             try {
 
-                const commentsResult = onSnapshotVar();
+                // Get doc content from doc ref
+                const docSnap = await getDoc(docRef);
 
-                console.log("commentsResult -> ", commentsResult);
+                // Get replies array from doc snap
+                const repliesArray = docSnap.data()?.replies;
 
-                /*
+                // Find reply in replies array
+                const replyIndex = repliesArray.findIndex(
+                    (reply: Comment) => reply.replyId === replyId
+                );
+
+                // Update reply in replies array
+                repliesArray[replyIndex] = {
+                    ...repliesArray[replyIndex],
+                    content: comment,
+                    updatedAt: new Date().toISOString(),
+                };
+
+                // Update replies array in firestore
                 await updateDoc(docRef, {
-                    replies: arrayUnion({
-                        content: comment,
-                        createdAt: commentObject?.createdAt,
-                        replyId: replyId,
-                        replies: commentObject?.replies,
-                        score: commentObject?.score,
-                        owner: commentObject?.owner,
-                    })
-                })*/
-
-            }catch(err) {
-                console.log("Error updating reply in parent comment replies array -> ", err);
-            }               
-            
-
+                    replies: repliesArray,
+                });
+            }catch (err) {
+                console.log(err);
+            }
 
         } else {
             const docRef = doc(db, "comments", commentId);
