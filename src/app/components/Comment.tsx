@@ -6,7 +6,7 @@ import Image from "next/image";
 import RemoveCommentModal from "./RemoveComment";
 import ReplyToComment from "./ReplyToComment";
 import EditComment from "./EditComment";
-import { timeSince } from "../utils";
+import { timeSince } from "../../utils/utils";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/utils/firebase";
 

@@ -95,8 +95,6 @@ const AddComment = ({
                 console.error(err)
             }
         }
-
-
         setComment("");
 
         alert("Comment added successfully")

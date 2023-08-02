@@ -1,5 +1,4 @@
 "use client";
-import { useCommentStore } from "./store/commentStore";
 import { useState, useEffect } from "react";
 import Comment from "./components/Comment";
 import AddComment from "./components/AddComment";
