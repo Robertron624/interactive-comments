@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { doc, updateDoc, serverTimestamp, arrayUnion, collection, query, onSnapshot, where, arrayRemove, getDoc } from "firebase/firestore";
+import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 
 import { Comment } from "../types";
@@ -80,7 +80,7 @@ const EditComment = ({
                     replies: repliesArray,
                 });
             }catch (err) {
-                console.log(err);
+                console.error(err);
             }
 
         } else {
@@ -91,7 +91,7 @@ const EditComment = ({
             try {
                 await updateDoc(docRef, updatedComment);
             } catch (err) {
-                console.log(err);
+                console.error(err);
             }
         }
 

@@ -71,7 +71,7 @@ const AddComment = ({
                 
             }
             catch(err) {
-                console.log(err)
+                console.error(err)
             }
             finally {
                 if (setAddReplyMode) setAddReplyMode(false);
@@ -92,7 +92,7 @@ const AddComment = ({
                 await addDoc(collectionRef, commentToAdd);
             }
             catch(err) {
-                console.log(err)
+                console.error(err)
             }
         }
 

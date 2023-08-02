@@ -16,7 +16,7 @@ const currentUser = {
 
 
 const ReplyToComment = (
-    { addReplyMode, parentCommentId, setAddReplyMode, parentCommentUsername, isReply, originalCommentId}: Props
+    { parentCommentId, setAddReplyMode, isReply, originalCommentId}: Props
 ) => {
 
   return (
