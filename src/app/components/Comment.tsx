@@ -231,6 +231,15 @@ const Comment = ({
                                     setEditMode={setEditMode}
                                     oldComment={content}
                                     parentCommentId={parentCommentId}
+                                    replyId={replyId}
+                                    commentObject={{
+                                        owner,
+                                        content,
+                                        createdAt,
+                                        replies,
+                                        score,
+                                    }}
+
                                 />
                             ) : (
                                 content
@@ -286,6 +295,13 @@ const Comment = ({
                                         isDeleteModalOpen={isDeleteModalOpen}
                                         parentCommentId={parentCommentId}
                                         replyId={replyId}
+                                        commentObject={{
+                                            owner,
+                                            content,
+                                            createdAt,
+                                            replies,
+                                            score,
+                                        }}
                                     />
                                     <button
                                         onClick={handleDelete}
@@ -373,7 +389,7 @@ const Comment = ({
                             />
                         )}
                         {replies.map((reply: Comment) => (
-                            <Comment key={reply.id} {...reply} parentCommentId={
+                            <Comment key={reply.replyId} {...reply} parentCommentId={
                                 parentCommentId ? parentCommentId : id
                             }/>
                         ))}

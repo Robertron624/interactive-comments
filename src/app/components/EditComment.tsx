@@ -1,12 +1,25 @@
 import { useState } from "react";
-import { doc, updateDoc, serverTimestamp } from "firebase/firestore";
+import { doc, updateDoc, serverTimestamp, arrayUnion, collection, query, onSnapshot, where } from "firebase/firestore";
 import { db } from "@/utils/firebase";
+
+import { Comment } from "../types";
 
 interface Props {
     commentId: string;
     setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
     oldComment: string;
     parentCommentId?: string;
+    replyId?: string;
+    commentObject?: {
+        content: string;
+        createdAt: string;
+        replies: Comment[];
+        score: number;
+        owner: {
+            username: string;
+            profileImageUrl: string;
+        };
+    };
 }
 
 const EditComment = ({
@@ -14,6 +27,8 @@ const EditComment = ({
     setEditMode,
     oldComment,
     parentCommentId,
+    replyId,
+    commentObject,
 }: Props) => {
     const [comment, setComment] = useState(oldComment);
 
@@ -28,31 +43,61 @@ const EditComment = ({
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+        const updatedComment = {
+            content: comment,
+            updatedAt: new Date().toISOString(),
+        };
 
-
-        console.log("parentCommentId -> ", parentCommentId);
-
-        // If parentCommentId exists, it's a reply and as such, we need to update the parent comment's replies array with the new reply content
-        if (parentCommentId) {
+        // If replyId exists, it's a reply and as such, we need to update the parent comment's replies array with the new reply content
+        if (replyId && parentCommentId) {
             // Add unique id to reply, this will be used to identify the reply in the UI, and also to identify the reply in the database since the reply will be stored in the replies array of the parent comment as a string
 
-            // Search for parent comment in comments array
+            
 
-            console.log("parentCommentId -> ", parentCommentId)
+            // Seach for parent comment in firebase
+            const collectionRef = collection(db, 'post');
+            const q = query(collectionRef, where("id", "==", parentCommentId));
 
-            // const docRef = doc(db, "comments", parentCommentId);
-                
-            // 
+            const onSnapshotVar = onSnapshot(q, (querySnapshot) => {
+                const comments = querySnapshot.docs.map((doc) => {
+                    return {
+                        id: doc.id,
+                        ...doc.data(),
+                    } as Comment;
+                });
+                return comments;
+            });
+
+
+            // Update reply in replies array of parent comment 
+            try {
+
+                const commentsResult = onSnapshotVar();
+
+                console.log("commentsResult -> ", commentsResult);
+
+                /*
+                await updateDoc(docRef, {
+                    replies: arrayUnion({
+                        content: comment,
+                        createdAt: commentObject?.createdAt,
+                        replyId: replyId,
+                        replies: commentObject?.replies,
+                        score: commentObject?.score,
+                        owner: commentObject?.owner,
+                    })
+                })*/
+
+            }catch(err) {
+                console.log("Error updating reply in parent comment replies array -> ", err);
+            }               
+            
 
 
         } else {
             const docRef = doc(db, "comments", commentId);
 
             // Update comment in firestore
-            const updatedComment = {
-                content: comment,
-                updatedAt: serverTimestamp(),
-            };
 
             try {
                 await updateDoc(docRef, updatedComment);
