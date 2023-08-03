@@ -9,12 +9,6 @@ interface Props {
     isReply: boolean;
 }
 
-const currentUser = {
-    profileImageUrl: "/avatars/image-juliusomo.png",
-    username: "juliusomo",
-};
-
-
 const ReplyToComment = (
     { parentCommentId, setAddReplyMode, isReply, originalCommentId}: Props
 ) => {

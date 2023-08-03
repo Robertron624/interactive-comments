@@ -1,4 +1,3 @@
-"use client";
 import { useState } from "react";
 import Image from "next/image";
 import { v4 as uuidv4 } from "uuid";

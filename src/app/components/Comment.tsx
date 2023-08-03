@@ -1,5 +1,3 @@
-"use client";
-
 import { Comment } from "../types";
 import { useState } from "react";
 import Image from "next/image";
@@ -116,7 +114,7 @@ const Comment = ({
 
             // Update comment in firestore with new score
             const updatedComment = {
-                score: score + 1,
+                score: score - 1,
             };
 
             try {
