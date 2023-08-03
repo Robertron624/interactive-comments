@@ -47,7 +47,6 @@ const EditComment = ({
 
         const updatedComment = {
             content: comment,
-            updatedAt: new Date().toISOString(),
         };
 
         // If replyId exists, it's a reply and as such, we need to update the parent comment's replies array with the new reply content
@@ -74,7 +73,6 @@ const EditComment = ({
                 repliesArray[replyIndex] = {
                     ...repliesArray[replyIndex],
                     content: comment,
-                    updatedAt: new Date().toISOString(),
                 };
 
                 // Update replies array in firestore

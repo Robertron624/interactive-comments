@@ -33,6 +33,7 @@ const RemoveCommentModal = (
         if(replyId && parentCommentId) {
             // Seach for parent comment in firebase
             const docRef = doc(db, "comments", parentCommentId);
+
             try {
                 // Remove reply from replies array of parent comment, it has to be removed as an object since the arrayRemove method will search for the exact object in the array and remove it
                 await updateDoc(docRef, {
