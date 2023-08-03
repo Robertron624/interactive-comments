@@ -2,6 +2,8 @@ import { useState } from "react";
 import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 
+import { toast } from "react-toastify";
+
 import { Comment } from "../types";
 
 interface Props {
@@ -95,7 +97,11 @@ const EditComment = ({
             }
         }
 
-        alert("Comment updated successfully");
+        toast.success("Comment edited successfully", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 1500,
+        })
+
         setEditMode(false);
     };
 

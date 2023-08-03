@@ -6,6 +6,8 @@ import { addDoc, collection, doc, updateDoc, arrayUnion } from "firebase/firesto
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "@/utils/firebase";
 
+import { toast } from "react-toastify";
+
 
 interface Props {
     parentCommentId?: string;
@@ -31,7 +33,10 @@ const AddComment = ({
         // Check if comment is empty
 
         if (!comment) {
-            alert("Comment cannot be empty") 
+            toast.error("Comment cannot be empty", {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 1500,
+            })
             return;
         }
 
@@ -96,7 +101,10 @@ const AddComment = ({
         }
         setComment("");
 
-        alert("Comment added successfully")
+        toast.success("Comment added successfully", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 1500,
+        })
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {

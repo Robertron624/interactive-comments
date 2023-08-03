@@ -3,6 +3,7 @@ import cn from "classnames";
 import { arrayRemove, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 import { Comment } from "../types";
+import { toast } from "react-toastify";
 
 interface Props {
     commentId: string;
@@ -58,7 +59,10 @@ const RemoveCommentModal = (
                 console.error("Error removing document: ", error);
             }
         }
-        alert("Comment deleted successfully");
+        toast.success("Comment removed successfully", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 1500,
+        })
         setIsDeleteModalOpen(!isDeleteModalOpen);
     };
 

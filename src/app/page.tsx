@@ -12,6 +12,9 @@ import GoogleLogin from "./components/GoogleLogin";
 import RootLayout from "./layout";
 import Header from "@/Header";
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
+
 export default function Home() {
     const [user, loading] = useAuthState(auth);
 
@@ -43,6 +46,7 @@ export default function Home() {
 
     return (
         <RootLayout>
+            <ToastContainer limit={1}/>
             <Header />
             <main className="py-6 flex min-h-screen flex-col items-center">
                 <h1 className="sr-only">Interactive Comments</h1>
