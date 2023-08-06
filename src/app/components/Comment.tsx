@@ -10,6 +10,7 @@ import { auth } from "@/utils/firebase";
 
 import { db } from "@/utils/firebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { toast } from "react-toastify";
 
 const Comment = ({
     id,
@@ -38,6 +39,16 @@ const Comment = ({
     };
 
     const handleUpvote = async () => {
+
+        // Block upvote if user is not logged in
+        if (!user) {
+            toast.error("You need to be logged in to upvote", {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 1500,
+            });
+            return;
+        }
+
         if (isReply && parentCommentId) {
             // Search for parent comment in firestore
             const docRef = doc(db, "comments", parentCommentId);
@@ -82,6 +93,14 @@ const Comment = ({
     };
 
     const handleDownvote = async () => {
+        // Block downvote if user is not logged in
+        if (!user) {
+            toast.error("You need to be logged in to downvote", {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 1500,
+            });
+            return;
+        }
         if (isReply && parentCommentId) {
             // Search for parent comment in firestore
             const docRef = doc(db, "comments", parentCommentId);
@@ -126,6 +145,14 @@ const Comment = ({
     };
 
     const handleReply = () => {
+        // If user is not logged in, block reply
+        if (!user) {
+            toast.error("You need to be logged in to reply", {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 1500,
+            });
+            return;
+        }
         setAddReplyMode(!addReplyMode);
     };
 

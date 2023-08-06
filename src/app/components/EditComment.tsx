@@ -30,7 +30,6 @@ const EditComment = ({
     oldComment,
     parentCommentId,
     replyId,
-    commentObject,
 }: Props) => {
     const [comment, setComment] = useState(oldComment);
 
@@ -128,7 +127,7 @@ const EditComment = ({
             </form>
             <button
                 onClick={handleCancel}
-                className="hover:opacity-70 transition-all px-2 py-2 text-white bg-soft-red rounded-md"
+                className="hover:opacity-70 transition-all px-2 py-2 text-white bg-soft-red rounded-md float-right mt-4 "
             >
                 CANCEL
             </button>
