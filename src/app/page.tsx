@@ -15,6 +15,8 @@ import Header from "@/Header";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 
+import { NextSeo } from 'next-seo';
+
 export default function Home() {
     const [user, loading] = useAuthState(auth);
 
@@ -46,6 +48,17 @@ export default function Home() {
 
     return (
         <RootLayout>
+            <NextSeo
+                title="Interactive Comments Section"
+                description="A simple comment system built with Next.js, Firebase and Tailwind CSS"
+                canonical="https://fullstack-version--melodic-lamington-1297e9.netlify.app/"
+                openGraph={{
+                    url: 'https://fullstack-version--melodic-lamington-1297e9.netlify.app/',
+                    title: 'Interactive Comments Section',
+                    description: 'A simple comment system built with Next.js, Firebase and Tailwind CSS',
+                }}
+            />
+    
             <ToastContainer limit={1}/>
             <Header />
             <main className="py-6 flex min-h-screen flex-col items-center">
